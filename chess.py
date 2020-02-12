@@ -10,6 +10,7 @@ def init_board():
 
     board = [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]
 
+    # Lines are pointless after drawing boxes now, will remove later
     def draw_lines():
 
         x_line = 100
@@ -27,7 +28,51 @@ def init_board():
 
             y_line += 100
 
-    draw_lines()
+    def draw_boxes():
+
+        x_box = 0
+        y_box = 0
+
+        for y in range(8):
+
+            for x in range(8):
+
+                #print("Drawing box in ({},{})".format(x, y))
+
+                #print("x_box: {}, y_box: {}".format(x_box, y_box))
+
+                if (y % 2) == 0:
+
+                    if (x % 2) == 0:
+
+                        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_box, y_box, 100, 100))
+
+
+                    else:
+
+                        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_box, y_box, 100, 100))
+
+                else:
+
+                    if (x % 2) == 0:
+
+                        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_box, y_box, 100, 100))
+
+                    else:
+
+                        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_box, y_box, 100, 100))
+
+                x_box += 100
+
+            x_box = 0
+            y_box += 100
+
+        for y in range(7):
+
+            pass
+
+    #draw_lines()
+    draw_boxes()
 
     while 1:
 
