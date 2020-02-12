@@ -18,8 +18,6 @@ class Chess(object):
         self.highlighted_box = cords
 
 
-
-
 def init_board():
 
     global chess
@@ -99,6 +97,7 @@ def init_board():
     #draw_lines()
     draw_boxes()
 
+    # Game loop
     while 1:
 
         for event in pygame.event.get():
@@ -124,6 +123,12 @@ def highlight_box(box_cords):
     # Will break if the user selects a pixel such as 100, 200, 300, 400...
     x_pos = box_cords[0] * 100
     y_pos = box_cords[1] * 100
+
+    # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
+    if chess.get_highlighted_box() != box_cords:
+
+        # This makes it so you cant draw with the boxes
+        highlight_box(chess.get_highlighted_box())
 
     if chess.get_highlighted_box() == box_cords:
 
