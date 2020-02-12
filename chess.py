@@ -1,10 +1,36 @@
 import pygame, sys
 
+
+class Chess(object):
+
+    # def __init__(self):
+    #
+    #     self.high
+
+    highlighted_box = (-1, -1)
+
+    def get_highlighted_box(self):
+
+        return self.highlighted_box
+
+    def set_highlighted_box(self, cords):
+
+        self.highlighted_box = cords
+
+
+
+
 def init_board():
+
+    global chess
+
+    chess = Chess()
 
     pygame.init()
 
     size = width, height = 800, 800
+
+    global screen
 
     screen = pygame.display.set_mode(size)
 
@@ -47,7 +73,6 @@ def init_board():
 
                         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_box, y_box, 100, 100))
 
-
                     else:
 
                         pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_box, y_box, 100, 100))
@@ -82,13 +107,62 @@ def init_board():
 
             if (1, 0, 0) == pygame.mouse.get_pressed():
 
-                print(pygame.mouse.get_pressed())
+                #print(pygame.mouse.get_pressed())
 
                 mouse_pos = pygame.mouse.get_pos()
 
-                print(check_bounds(mouse_pos))
+                #print(check_bounds(mouse_pos))
+                highlight_box(check_bounds(mouse_pos))
 
         pygame.display.flip()
+
+
+def highlight_box(box_cords):
+
+    # Need error conditioning
+
+    # Will break if the user selects a pixel such as 100, 200, 300, 400...
+    x_pos = box_cords[0] * 100
+    y_pos = box_cords[1] * 100
+
+    if chess.get_highlighted_box() == box_cords:
+
+        if (box_cords[1] % 2) == 0:
+
+            if (box_cords[0] % 2) == 0:
+
+                pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
+
+            else:
+
+                pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
+
+        else:
+
+            if (box_cords[0] % 2) == 0:
+
+                pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
+
+            else:
+
+                pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
+
+    else:
+
+        pygame.draw.rect(screen, (166, 166, 166), pygame.Rect(x_pos, y_pos, 100, 100))
+
+        chess.set_highlighted_box(box_cords)
+
+    print(x_pos, y_pos)
+
+    return box_cords
+
+
+
 
 
 def check_bounds(mouse_pos):
@@ -105,7 +179,7 @@ def check_bounds(mouse_pos):
 
                      (0, 99, 101, 199): ("Alpha 7", (0, 1)), (101, 199, 101, 199): ("Bravo 7", (1, 1)),
                      (201, 299, 101, 199): ("Charlie 7", (2, 1)), (301, 399, 101, 199): ("Delta 7", (3, 1)),
-                     (401, 499, 101, 199): ("Echo 7", (4, 1)), (501, 699, 101, 199): ("Foxtrot 7", (5, 1)),
+                     (401, 499, 101, 199): ("Echo 7", (4, 1)), (501, 599, 101, 199): ("Foxtrot 7", (5, 1)),
                      (601, 699, 101, 199): ("Golf 7", (6, 1)), (701, 799, 101, 199): ("Hotel 7", (7, 1)),
 
                      (0, 99, 201, 299): ("Alpha 6", (0, 2)), (101, 199, 201, 299): ("Bravo 6", (1, 2)),
