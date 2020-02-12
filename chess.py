@@ -3,11 +3,28 @@ import pygame, sys
 
 class Chess(object):
 
-    # def __init__(self):
-    #
-    #     self.high
-
     highlighted_box = (-1, -1)
+
+    # global black_rook
+    # global black_knight
+    # global black_bishop
+    # global black_king
+    # global black_queen
+    # global black_pawn
+
+    black_rook = pygame.image.load('blackRook.png')
+    black_knight = pygame.image.load('blackKnight.png')
+    black_bishop = pygame.image.load('blackBishop.png')
+    black_king = pygame.image.load('blackKing.png')
+    black_queen = pygame.image.load('blackQueen.png')
+    black_pawn = pygame.image.load('blackPawn.png')
+
+    black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
+
+    chess_board = {(0, 0): black_rook, (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
+                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook,
+                   (0, 1): black_pawn, (1, 1): black_pawn, (2, 1): black_pawn, (3, 1): black_pawn, (4, 1): black_pawn,
+                   (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn}
 
     def get_highlighted_box(self):
 
@@ -16,6 +33,26 @@ class Chess(object):
     def set_highlighted_box(self, cords):
 
         self.highlighted_box = cords
+
+    def get_chessboard_color2(self):
+
+        return (157, 87, 27)
+
+    def get_chessboard_color1(self):
+
+        return (230, 204, 171)
+
+    def get_chess_board(self):
+
+        return self.chess_board
+
+    def get_black_game_pieces(self):
+
+        return self.black_pieces
+
+    def draw_black_rook(self, pos):
+
+        screen.blit(self.black_rook, (pos[0] + 25, pos[1] + 25))
 
 
 def init_board():
@@ -69,21 +106,21 @@ def init_board():
 
                     if (x % 2) == 0:
 
-                        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_box, y_box, 100, 100))
+                        pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_box, y_box, 100, 100))
 
                     else:
 
-                        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_box, y_box, 100, 100))
+                        pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_box, y_box, 100, 100))
 
                 else:
 
                     if (x % 2) == 0:
 
-                        pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_box, y_box, 100, 100))
+                        pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_box, y_box, 100, 100))
 
                     else:
 
-                        pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_box, y_box, 100, 100))
+                        pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_box, y_box, 100, 100))
 
                 x_box += 100
 
@@ -94,8 +131,46 @@ def init_board():
 
             pass
 
+    def init_game_pieces():
+
+        black_pieces_list = chess.get_black_game_pieces()
+
+        screen.blit(black_pieces_list[0], (25, 25))
+        screen.blit(black_pieces_list[1], (125, 25))
+        screen.blit(black_pieces_list[2], (225, 25))
+        screen.blit(black_pieces_list[3], (325, 25))
+        screen.blit(black_pieces_list[4], (425, 25))
+        screen.blit(black_pieces_list[2], (525, 25))
+        screen.blit(black_pieces_list[1], (625, 25))
+        screen.blit(black_pieces_list[0], (725, 25))
+
+        black_pawn_x_pos = 25
+        for x in range(8):
+
+            screen.blit(black_pieces_list[5], (black_pawn_x_pos, 125))
+            black_pawn_x_pos += 100
+
+    def draw_game_pieces():
+
+        #print(chess.get_chess_board())
+
+        for pieces in chess.get_chess_board():
+
+            screen.blit(chess.get_chess_board()[pieces], (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+
+            #print(chess.get_chess_board()[pieces])
+
+
+
     #draw_lines()
     draw_boxes()
+    init_game_pieces()
+
+
+
+    def update_board():
+
+        draw_game_pieces()
 
     # Game loop
     while 1:
@@ -112,6 +187,7 @@ def init_board():
 
                 #print(check_bounds(mouse_pos))
                 highlight_box(check_bounds(mouse_pos))
+                update_board()
 
         pygame.display.flip()
 
@@ -136,24 +212,24 @@ def highlight_box(box_cords):
 
             if (box_cords[0] % 2) == 0:
 
-                pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_pos, y_pos, 100, 100))
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
                 chess.set_highlighted_box((-1, -1))
 
             else:
 
-                pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_pos, y_pos, 100, 100))
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
                 chess.set_highlighted_box((-1, -1))
 
         else:
 
             if (box_cords[0] % 2) == 0:
 
-                pygame.draw.rect(screen, (0, 0, 0), pygame.Rect(x_pos, y_pos, 100, 100))
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
                 chess.set_highlighted_box((-1, -1))
 
             else:
 
-                pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(x_pos, y_pos, 100, 100))
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
                 chess.set_highlighted_box((-1, -1))
 
     else:
