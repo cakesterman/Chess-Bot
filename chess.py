@@ -1,5 +1,5 @@
 import pygame, sys
-
+import chess_rules
 
 class Chess(object):
 
@@ -12,28 +12,34 @@ class Chess(object):
     # global black_queen
     # global black_pawn
 
-    black_rook = pygame.image.load('blackRook.png')
-    black_knight = pygame.image.load('blackKnight.png')
-    black_bishop = pygame.image.load('blackBishop.png')
-    black_king = pygame.image.load('blackKing.png')
-    black_queen = pygame.image.load('blackQueen.png')
-    black_pawn = pygame.image.load('blackPawn.png')
+    black_rook = [pygame.image.load('blackRook.png'), "Black rook"]
+    black_knight = [pygame.image.load('blackKnight.png'), "Black Knight"]
+    black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
+    black_king = [pygame.image.load('blackKing.png'), "Black King"]
+    black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
+    black_pawn = [pygame.image.load('blackPawn.png'), "Black Pawn"]
 
-    white_rook = pygame.image.load('whiteRook.png')
-    white_knight = pygame.image.load('whiteKnight.png')
-    white_bishop = pygame.image.load('whiteBishop.png')
-    white_queen = pygame.image.load("whiteQueen.png")
-    white_king = pygame.image.load("whiteKing.png")
-    white_pawn = pygame.image.load("whitePawn.png")
+    white_rook = [pygame.image.load('whiteRook.png'), "White Rook"]
+    white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
+    white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
+    white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
+    white_king = [pygame.image.load("whiteKing.png"), "White King"]
+    white_pawn = [pygame.image.load("whitePawn.png"), "White Pawn"]
+
+    print(type(black_rook))
 
     black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
     white_pieces = [white_rook, white_knight, white_bishop, white_queen, white_king, white_pawn]
 
-    chess_board = {(0, 0): black_rook, (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
-                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook,
+    chess_board = {(0, 0): black_rook[0], (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
+                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook[0],
                    (0, 1): black_pawn, (1, 1): black_pawn, (2, 1): black_pawn, (3, 1): black_pawn, (4, 1): black_pawn,
-                   (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn, (0, 2): None, (1, 2): None, (2, 2): None,
-                   (3, 2): None, (4, 2): None, (5, 2): None, (6, 2): None, (7, 2): None, (0, 3): None}
+                   (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn,
+
+                   (0, 6): white_pawn, (1, 6): white_pawn, (2, 6): white_pawn, (3, 6): white_pawn, (4, 6): white_pawn,
+                   (5, 6): white_pawn, (6, 6): white_pawn, (7, 6): white_pawn, (0, 7): white_rook, (1, 7): white_knight,
+                   (2, 7): white_bishop, (3, 7): white_queen, (4, 7): white_king, (5, 7): white_bishop,
+                   (6, 7): white_knight, (7, 7): white_rook}
 
     def get_highlighted_box(self):
 
@@ -86,7 +92,7 @@ def init_board():
 
     screen = pygame.display.set_mode(size)
 
-    board = [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]
+    #board = [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]
 
     # Lines are pointless after drawing boxes now, will remove later
     def draw_lines():
@@ -152,42 +158,41 @@ def init_board():
 
         black_pieces_list = chess.get_black_game_pieces()
 
-        screen.blit(black_pieces_list[0], (25, 25))
-        screen.blit(black_pieces_list[1], (125, 25))
-        screen.blit(black_pieces_list[2], (225, 25))
-        screen.blit(black_pieces_list[3], (325, 25))
-        screen.blit(black_pieces_list[4], (425, 25))
-        screen.blit(black_pieces_list[2], (525, 25))
-        screen.blit(black_pieces_list[1], (625, 25))
-        screen.blit(black_pieces_list[0], (725, 25))
+        screen.blit(black_pieces_list[0][0], (25, 25))
+        screen.blit(black_pieces_list[1][0], (125, 25))
+        screen.blit(black_pieces_list[2][0], (225, 25))
+        screen.blit(black_pieces_list[3][0], (325, 25))
+        screen.blit(black_pieces_list[4][0], (425, 25))
+        screen.blit(black_pieces_list[2][0], (525, 25))
+        screen.blit(black_pieces_list[1][0], (625, 25))
+        screen.blit(black_pieces_list[0][0], (725, 25))
 
         black_pawn_x_pos = 25
         for x in range(8):
 
-            screen.blit(black_pieces_list[5], (black_pawn_x_pos, 125))
+            screen.blit(black_pieces_list[5][0], (black_pawn_x_pos, 125))
             black_pawn_x_pos += 100
 
         white_pieces_list = chess.get_white_game_pieces()
 
-        screen.blit(white_pieces_list[0], (25, 725))
-        screen.blit(white_pieces_list[1], (125, 725))
-        screen.blit(white_pieces_list[2], (225, 725))
-        screen.blit(white_pieces_list[3], (325, 725))
-        screen.blit(white_pieces_list[4], (425, 725))
-        screen.blit(white_pieces_list[2], (525, 725))
-        screen.blit(white_pieces_list[1], (625, 725))
-        screen.blit(white_pieces_list[0], (725, 725))
+        screen.blit(white_pieces_list[0][0], (25, 725))
+        screen.blit(white_pieces_list[1][0], (125, 725))
+        screen.blit(white_pieces_list[2][0], (225, 725))
+        screen.blit(white_pieces_list[3][0], (325, 725))
+        screen.blit(white_pieces_list[4][0], (425, 725))
+        screen.blit(white_pieces_list[2][0], (525, 725))
+        screen.blit(white_pieces_list[1][0], (625, 725))
+        screen.blit(white_pieces_list[0][0], (725, 725))
 
         white_pawn_x_pos = 25
         for x in range(8):
-            screen.blit(white_pieces_list[5], (white_pawn_x_pos, 625))
+            screen.blit(white_pieces_list[5][0], (white_pawn_x_pos, 625))
             white_pawn_x_pos += 100
 
 
     #draw_lines()
     draw_boxes()
     init_game_pieces()
-
 
     def update_board():
 
@@ -197,11 +202,17 @@ def init_board():
 
         #print(chess.get_chess_board())
 
+
+
         for pieces in chess.get_chess_board():
 
             if chess.get_chess_board()[pieces] is not None:
 
-                screen.blit(chess.get_chess_board()[pieces], (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+                #print(chess.get_chess_board()[pieces][0])
+
+                #test = chess.get_chess_board()[pieces][0]
+
+                screen.blit((chess.get_chess_board()[pieces]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
 
             #print(chess.get_chess_board()[pieces])
 
@@ -231,6 +242,8 @@ def highlight_box(box_cords):
 
     # Will break if the user selects a pixel such as 100, 200, 300, 400...
 
+    #print(chess.get_chess_board()[box_cords][1])
+
     try:
 
         x_pos = box_cords[0] * 100
@@ -242,10 +255,13 @@ def highlight_box(box_cords):
             # Checks if the last highlighted box value in chess_board is not None
             if chess.get_chess_board()[chess.get_highlighted_box()] is not None:
 
-                temp = chess.get_chess_board()[chess.get_highlighted_box()]
+                if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()][1],
+                                                chess.get_highlighted_box(), box_cords):
 
-                chess.update_game_piece(chess.get_highlighted_box(), None)
-                chess.update_game_piece(box_cords, temp)
+                    temp = chess.get_chess_board()[chess.get_highlighted_box()]
+
+                    chess.update_game_piece(chess.get_highlighted_box(), None)
+                    chess.update_game_piece(box_cords, temp)
 
         # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
         if chess.get_highlighted_box() != box_cords:
