@@ -12,27 +12,25 @@ class Chess(object):
     # global black_queen
     # global black_pawn
 
-    black_rook = [pygame.image.load('blackRook.png'), "Black rook"]
-    black_knight = [pygame.image.load('blackKnight.png'), "Black Knight"]
-    black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
-    black_king = [pygame.image.load('blackKing.png'), "Black King"]
-    black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
-    black_pawn = [pygame.image.load('blackPawn.png'), "Black Pawn"]
+    black_rook = [pygame.image.load('blackRook.png'), "Black Rook"]
+    black_knight = [pygame.image.load('blackKnight.png'), "Knight"]
+    black_bishop = [pygame.image.load('blackBishop.png'), "Bishop"]
+    black_king = [pygame.image.load('blackKing.png'), "King"]
+    black_queen = [pygame.image.load('blackQueen.png'), "Queen"]
+    black_pawn = [pygame.image.load('blackPawn.png'), "Pawn"]
 
-    white_rook = [pygame.image.load('whiteRook.png'), "White Rook"]
-    white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
-    white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
-    white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
-    white_king = [pygame.image.load("whiteKing.png"), "White King"]
-    white_pawn = [pygame.image.load("whitePawn.png"), "White Pawn"]
-
-    print(type(black_rook))
+    white_rook = [pygame.image.load('whiteRook.png'), "Rook"]
+    white_knight = [pygame.image.load('whiteKnight.png'), "Knight"]
+    white_bishop = [pygame.image.load('whiteBishop.png'), "Bishop"]
+    white_queen = [pygame.image.load("whiteQueen.png"), "Queen"]
+    white_king = [pygame.image.load("whiteKing.png"), "King"]
+    white_pawn = [pygame.image.load("whitePawn.png"), "Pawn"]
 
     black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
     white_pieces = [white_rook, white_knight, white_bishop, white_queen, white_king, white_pawn]
 
-    chess_board = {(0, 0): black_rook[0], (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
-                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook[0],
+    chess_board = {(0, 0): black_rook, (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
+                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook,
                    (0, 1): black_pawn, (1, 1): black_pawn, (2, 1): black_pawn, (3, 1): black_pawn, (4, 1): black_pawn,
                    (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn,
 
@@ -212,7 +210,7 @@ def init_board():
 
                 #test = chess.get_chess_board()[pieces][0]
 
-                screen.blit((chess.get_chess_board()[pieces]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+                screen.blit((chess.get_chess_board()[pieces][0]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
 
             #print(chess.get_chess_board()[pieces])
 
@@ -244,73 +242,75 @@ def highlight_box(box_cords):
 
     #print(chess.get_chess_board()[box_cords][1])
 
-    try:
+    #try:
 
-        x_pos = box_cords[0] * 100
-        y_pos = box_cords[1] * 100
+    x_pos = box_cords[0] * 100
+    y_pos = box_cords[1] * 100
 
-        # Checks if the last highlighted box is in the chess_board keys
-        if chess.get_highlighted_box() in chess.get_chess_board().keys():
+    # Checks if the last highlighted box is in the chess_board keys
+    if chess.get_highlighted_box() in chess.get_chess_board().keys():
 
-            # Checks if the last highlighted box value in chess_board is not None
-            if chess.get_chess_board()[chess.get_highlighted_box()] is not None:
+        # Checks if the last highlighted box value in chess_board is not None
+        if chess.get_chess_board()[chess.get_highlighted_box()] is not None:
 
-                if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()][1],
-                                                chess.get_highlighted_box(), box_cords):
+            # Checks if that game piece can make that move
+            if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()][1],
+                                            chess.get_highlighted_box(), box_cords, chess.get_chess_board()):
 
-                    temp = chess.get_chess_board()[chess.get_highlighted_box()]
+                temp = chess.get_chess_board()[chess.get_highlighted_box()]
 
-                    chess.update_game_piece(chess.get_highlighted_box(), None)
-                    chess.update_game_piece(box_cords, temp)
+                chess.update_game_piece(chess.get_highlighted_box(), None)
+                chess.update_game_piece(box_cords, temp)
 
-        # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
-        if chess.get_highlighted_box() != box_cords:
 
-            # This makes it so you cant draw with the boxes
-            highlight_box(chess.get_highlighted_box())
+    # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
+    if chess.get_highlighted_box() != box_cords:
 
-        # Checks if user is selecting the highlighted box to unselect it
-        if chess.get_highlighted_box() == box_cords:
+        # This makes it so you cant draw with the boxes
+        highlight_box(chess.get_highlighted_box())
 
-            if (box_cords[1] % 2) == 0:
+    # Checks if user is selecting the highlighted box to unselect it
+    if chess.get_highlighted_box() == box_cords:
 
-                if (box_cords[0] % 2) == 0:
+        if (box_cords[1] % 2) == 0:
 
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    chess.set_highlighted_box((-1, -1))
+            if (box_cords[0] % 2) == 0:
 
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    chess.set_highlighted_box((-1, -1))
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
 
             else:
 
-                if (box_cords[0] % 2) == 0:
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
 
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    chess.set_highlighted_box((-1, -1))
-
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    chess.set_highlighted_box((-1, -1))
-
-        # else the user selects a different box that is not already selected
         else:
 
-            # Setting the box to selected
-            pygame.draw.rect(screen, (166, 166, 166), pygame.Rect(x_pos, y_pos, 100, 100))
+            if (box_cords[0] % 2) == 0:
 
-            chess.set_highlighted_box(box_cords)
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
 
-        print(x_pos, y_pos)
+            else:
 
-        return box_cords
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
+                chess.set_highlighted_box((-1, -1))
 
-    except:
+    # else the user selects a different box that is not already selected
+    else:
 
-        print("No value")
+        # Setting the box to selected
+        pygame.draw.rect(screen, (166, 166, 166), pygame.Rect(x_pos, y_pos, 100, 100))
+
+        chess.set_highlighted_box(box_cords)
+
+    print(x_pos, y_pos)
+
+    return box_cords
+
+    #except:
+
+    #    print("No value")
 
 
 def check_bounds(mouse_pos):
