@@ -107,7 +107,73 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
             return False
 
+    elif game_piece == "Black Knight" or game_piece == "White Knight":
+
+        if pos_to_move in knight_calculate_all_possible_moves(current_pos, chess_board):
+
+            return True
+
+        else:
+
+            return False
+
     # Temporary else for testing and moving all other game pieces
     else:
 
         return True
+
+
+def knight_calculate_all_possible_moves(current_pos, chess_board):
+
+    all_possible_moves = []
+
+    def check_bounds_and_chess_board(x, y):
+
+        if 0 <= x < 8 and 0 <= y < 8:
+
+            if chess_board.get((x, y)) is None:
+
+                all_possible_moves.append((x, y))
+
+    for x in range(8):
+
+        for y in range(8):
+
+            if x == (current_pos[0] - 1) and y == (current_pos[1] + 2):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] + 1) and y == (current_pos[1] + 2):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] - 1) and y == (current_pos[1] - 2):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] + 1) and y == (current_pos[1] - 2):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] - 2) and y == (current_pos[1] + 1):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] - 2) and y == (current_pos[1] - 1):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] + 2) and y == (current_pos[1] + 1):
+
+                check_bounds_and_chess_board(x, y)
+
+            elif x == (current_pos[0] + 2) and y == (current_pos[1] - 1):
+
+                check_bounds_and_chess_board(x, y)
+
+    return all_possible_moves
+
+
+# test = 1
+# knight_calculate_all_possible_moves((0,0), test)
+
