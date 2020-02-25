@@ -16,13 +16,13 @@ class Chess(object):
     black_knight = [pygame.image.load('blackKnight.png'), "Black Knight"]
     black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
     black_king = [pygame.image.load('blackKing.png'), "King"]
-    black_queen = [pygame.image.load('blackQueen.png'), "Queen"]
+    black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
     black_pawn = [pygame.image.load('blackPawn.png'), "Pawn"]
 
     white_rook = [pygame.image.load('whiteRook.png'), "Rook"]
     white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
     white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
-    white_queen = [pygame.image.load("whiteQueen.png"), "Queen"]
+    white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
     white_king = [pygame.image.load("whiteKing.png"), "King"]
     white_pawn = [pygame.image.load("whitePawn.png"), "Pawn"]
 

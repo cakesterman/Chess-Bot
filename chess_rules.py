@@ -129,6 +129,16 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         #print(bishop_calculate_all_possible_moves(current_pos, chess_board))
 
+    elif game_piece == "Black Queen" or game_piece == "White Queen":
+
+        if pos_to_move in queen_calculate_all_possible_moves(current_pos, chess_board):
+
+            return True
+
+        else:
+
+            return False
+
     # Temporary else for testing and moving all other game pieces
     else:
 
@@ -326,6 +336,139 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
     return all_possible_moves
 
+
+def queen_calculate_all_possible_moves(current_pos, chess_board):
+
+    all_possible_moves = []
+
+    all_possible_moves.extend(bishop_calculate_all_possible_moves(current_pos, chess_board))
+
+    def search_down():
+
+        x = current_pos[0]
+        y = current_pos[1]
+
+        possible = True
+        while possible:
+
+            y += 1
+
+            if chess_board.get((x, y)) is None:
+
+                if y == 7:
+
+                    possible = False
+
+                all_possible_moves.append((x, y))
+
+            else:
+
+                possible = False
+
+    def search_up():
+
+        x = current_pos[0]
+        y = current_pos[1]
+
+        possible = True
+        while possible:
+
+            y -= 1
+
+            if chess_board.get((x, y)) is None:
+
+                if y == 0:
+                    possible = False
+
+                all_possible_moves.append((x, y))
+
+            else:
+
+                possible = False
+
+    def search_left():
+
+        x = current_pos[0]
+        y = current_pos[1]
+
+        possible = True
+        while possible:
+
+            x -= 1
+
+            if chess_board.get((x, y)) is None:
+
+                if x == 0:
+                    possible = False
+
+                all_possible_moves.append((x, y))
+
+            else:
+
+                possible = False
+
+    def search_right():
+
+        x = current_pos[0]
+        y = current_pos[1]
+
+        possible = True
+        while possible:
+
+            x += 1
+
+            if chess_board.get((x, y)) is None:
+
+                if x == 7:
+                    possible = False
+
+                all_possible_moves.append((x, y))
+
+            else:
+
+                possible = False
+
+    if current_pos[1] == 0 and 0 < current_pos[0] < 7:
+
+        search_down()
+        search_left()
+        search_right()
+
+    if current_pos[1] == 0 and current_pos[0] == 0:
+
+        search_right()
+        search_down()
+
+    if current_pos[1] == 0 and current_pos[0] == 7:
+
+        search_left()
+        search_down()
+
+    if current_pos[1] == 7 and 0 < current_pos[0] < 7:
+
+        search_up()
+        search_left()
+        search_right()
+
+    if current_pos[1] == 7 and current_pos[0] == 0:
+
+        search_right()
+        search_up()
+
+    if current_pos[1] == 7 and current_pos[0] == 7:
+
+        search_left()
+        search_up()
+
+    if 0 < current_pos[1] < 7 and 0 < current_pos[0] < 7:
+
+        search_right()
+        search_left()
+        search_up()
+        search_down()
+
+    print(all_possible_moves)
+    return all_possible_moves
 
 # test = 1
 # knight_calculate_all_possible_moves((0,0), test)
