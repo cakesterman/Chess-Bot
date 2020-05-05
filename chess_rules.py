@@ -27,7 +27,8 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
                         else:
 
-                            print("Invalid move, game piece {} is in the way".format(chess_board[(x, pos_to_move[1])]))
+                            print("Invalid move, game piece {} is in the way".format(chess_board[(x, pos_to_move[1])].get_name()))
+                            #print(chess_board[(x, pos_to_move[1])].get_name())
                             return False
 
                     print("Valid move")
@@ -88,8 +89,11 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
                         print("Checking position ({},{})".format(current_pos[0], temp_current_pos))
 
-                        if (temp_current_pos, current_pos[1]) not in chess_board or chess_board[
-                            (temp_current_pos, pos_to_move[1])] is None:
+                        # This if statement was broken and backwards causing rooks not being able to move
+                        # if (temp_current_pos, current_pos[1]) not in chess_board or chess_board[
+                        #     (temp_current_pos, pos_to_move[1])] is None:
+                        if (current_pos[0], temp_current_pos) not in chess_board or chess_board[
+                            (current_pos[0], temp_current_pos)] is None:
 
                             print("Path at ({},{}) is empty".format(temp_current_pos, pos_to_move[1]))
 
@@ -149,15 +153,17 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
             return False
 
-    # elif game_piece == "Black Pawn" or game_piece == "White Pawn":
-    #
-    #     if pos_to_move in pawn_calculate_all_possible_moves(current_pos, chess_board):
-    #
-    #         return True
-    #
-    #     else:
-    #
-    #         return False
+    elif game_piece == "Black Pawn" or game_piece == "White Pawn":
+
+        if pos_to_move in pawn_calculate_all_possible_moves(current_pos, chess_board):
+
+            chess_board[current_pos].set_first_move_false()
+
+            return True
+
+        else:
+
+            return False
 
     # Temporary else for testing and moving all other game pieces
     else:
@@ -583,7 +589,32 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
 
 def pawn_calculate_all_possible_moves(current_pos, chess_board):
 
-    pass
+    all_possible_moves = []
+
+    x = current_pos[0]
+    y = current_pos[1]
+
+    # If this is pawns first move, it can move two spaces
+    if chess_board[current_pos].get_is_first_move():
+
+        if y == 1:
+
+            all_possible_moves.append((x, y + 2))
+
+        if y == 6:
+
+            all_possible_moves.append((x, y - 2))
+
+    if chess_board[current_pos].get_name()[0:5] == "Black":
+
+        all_possible_moves.append((x, y + 1))
+
+    # else pawn is a white piece
+    else:
+
+        all_possible_moves.append((x, y - 1))
+
+    return all_possible_moves
 
 # test = 1
 # knight_calculate_all_possible_moves((0,0), test)
