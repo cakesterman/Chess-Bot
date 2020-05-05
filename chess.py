@@ -6,13 +6,13 @@ class Chess(object):
     class Chess_Pieces(object):
 
         # self.image = ''
-        is_first_move = True
 
         def __init__(self, image, name, id):
 
             self.image = image
             self.name = name
             self.id = id
+            self.is_first_move = True
 
         def get_image(self):
 
@@ -22,9 +22,13 @@ class Chess(object):
 
             return self.name
 
-        def is_first_move(self):
+        def get_is_first_move(self):
 
             return self.is_first_move
+
+        def set_first_move_false(self):
+
+            self.is_first_move = False
 
     black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1)
     black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2)
@@ -74,14 +78,14 @@ class Chess(object):
     black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
     black_king = [pygame.image.load('blackKing.png'), "Black King"]
     black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
-    black_pawn = [pygame.image.load('blackPawn.png'), "Pawn"]
+    black_pawn = [pygame.image.load('blackPawn.png'), "Black Pawn"]
 
     white_rook = [pygame.image.load('whiteRook.png'), "White Rook"]
     white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
     white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
     white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
     white_king = [pygame.image.load("whiteKing.png"), "White King"]
-    white_pawn = [pygame.image.load("whitePawn.png"), "Pawn"]
+    white_pawn = [pygame.image.load("whitePawn.png"), "White Pawn"]
 
     #black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
     black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
