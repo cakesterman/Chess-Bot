@@ -49,7 +49,7 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
                         else:
 
-                            print("Invalid move, game piece {} is in the way".format(chess_board[(temp_current_pos, pos_to_move[1])]))
+                            print("Invalid move, game piece {} is in the way".format( chess_board[ (temp_current_pos, pos_to_move[1]) ].get_name() ))
                             return False
 
                         temp_current_pos -= 1
@@ -138,6 +138,26 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
         else:
 
             return False
+
+    elif game_piece == "Black King" or game_piece == "White King":
+
+        if pos_to_move in king_calculate_all_possible_moves(current_pos, chess_board):
+
+            return True
+
+        else:
+
+            return False
+
+    # elif game_piece == "Black Pawn" or game_piece == "White Pawn":
+    #
+    #     if pos_to_move in pawn_calculate_all_possible_moves(current_pos, chess_board):
+    #
+    #         return True
+    #
+    #     else:
+    #
+    #         return False
 
     # Temporary else for testing and moving all other game pieces
     else:
@@ -469,6 +489,101 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
 
     print(all_possible_moves)
     return all_possible_moves
+
+
+def king_calculate_all_possible_moves(current_pos, chess_board):
+
+    all_possible_moves = []
+
+    def search_down():
+
+        all_possible_moves.append((current_pos[0], (current_pos[1] + 1)))
+
+    def search_up():
+
+        all_possible_moves.append((current_pos[0], (current_pos[1] - 1)))
+
+    def search_left():
+
+        all_possible_moves.append((current_pos[0] - 1, current_pos[1]))
+
+    def search_right():
+
+        all_possible_moves.append((current_pos[0] + 1, current_pos[1]))
+
+    def search_left_up_diagonally():
+
+        all_possible_moves.append((current_pos[0] - 1, current_pos[1] - 1))
+
+    def search_left_down_diagonally():
+
+        all_possible_moves.append((current_pos[0] - 1, current_pos[1] + 1))
+
+    def search_right_up_diagonally():
+
+        all_possible_moves.append((current_pos[0] + 1, current_pos[1] - 1))
+
+    def search_right_down_diagonally():
+
+        all_possible_moves.append((current_pos[0] + 1, current_pos[1] + 1))
+
+    # y == 0 and 0 < x < 7
+    if current_pos[1] == 0 and 0 < current_pos[0] < 7:
+
+        search_down()
+        search_left()
+        search_right()
+        search_left_down_diagonally()
+        search_right_down_diagonally()
+
+    if current_pos[1] == 0 and current_pos[0] == 0:
+
+        search_right()
+        search_down()
+        search_right_down_diagonally()
+
+    if current_pos[1] == 0 and current_pos[0] == 7:
+
+        search_left()
+        search_down()
+        search_left_down_diagonally()
+
+    if current_pos[1] == 7 and 0 < current_pos[0] < 7:
+
+        search_up()
+        search_left()
+        search_right()
+        search_left_up_diagonally()
+        search_right_up_diagonally()
+
+    if current_pos[1] == 7 and current_pos[0] == 0:
+
+        search_right()
+        search_up()
+        search_right_up_diagonally()
+
+    if current_pos[1] == 7 and current_pos[0] == 7:
+
+        search_left()
+        search_up()
+        search_left_up_diagonally()
+
+    if 0 < current_pos[1] < 7 and 0 < current_pos[0] < 7:
+
+        search_right()
+        search_left()
+        search_up()
+        search_down()
+        search_right_up_diagonally()
+        search_left_up_diagonally()
+        search_left_down_diagonally()
+        search_right_down_diagonally()
+
+    return all_possible_moves
+
+def pawn_calculate_all_possible_moves(current_pos, chess_board):
+
+    pass
 
 # test = 1
 # knight_calculate_all_possible_moves((0,0), test)

@@ -3,6 +3,63 @@ import chess_rules
 
 class Chess(object):
 
+    class Chess_Pieces(object):
+
+        # self.image = ''
+        is_first_move = True
+
+        def __init__(self, image, name, id):
+
+            self.image = image
+            self.name = name
+            self.id = id
+
+        def get_image(self):
+
+            return self.image
+
+        def get_name(self):
+
+            return self.name
+
+        def is_first_move(self):
+
+            return self.is_first_move
+
+    black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1)
+    black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2)
+    black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1)
+    black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 2)
+    black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 1)
+    black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 2)
+    black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 1)
+    black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 1)
+    black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 1)
+    black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 2)
+    black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 3)
+    black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 4)
+    black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 5)
+    black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 6)
+    black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 7)
+    black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 8)
+
+    white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1)
+    white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2)
+    white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 1)
+    white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 2)
+    white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 1)
+    white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 2)
+    white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 1)
+    white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 1)
+    white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 1)
+    white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 2)
+    white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 3)
+    white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 4)
+    white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 5)
+    white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 6)
+    white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 7)
+    white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 8)
+
     highlighted_box = (-1, -1)
 
     # global black_rook
@@ -15,29 +72,45 @@ class Chess(object):
     black_rook = [pygame.image.load('blackRook.png'), "Black Rook"]
     black_knight = [pygame.image.load('blackKnight.png'), "Black Knight"]
     black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
-    black_king = [pygame.image.load('blackKing.png'), "King"]
+    black_king = [pygame.image.load('blackKing.png'), "Black King"]
     black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
     black_pawn = [pygame.image.load('blackPawn.png'), "Pawn"]
 
-    white_rook = [pygame.image.load('whiteRook.png'), "Rook"]
+    white_rook = [pygame.image.load('whiteRook.png'), "White Rook"]
     white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
     white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
     white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
-    white_king = [pygame.image.load("whiteKing.png"), "King"]
+    white_king = [pygame.image.load("whiteKing.png"), "White King"]
     white_pawn = [pygame.image.load("whitePawn.png"), "Pawn"]
 
+    #black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
     black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
     white_pieces = [white_rook, white_knight, white_bishop, white_queen, white_king, white_pawn]
 
-    chess_board = {(0, 0): black_rook, (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
-                   (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook,
-                   (0, 1): black_pawn, (1, 1): black_pawn, (2, 1): black_pawn, (3, 1): black_pawn, (4, 1): black_pawn,
-                   (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn,
+    # chess_board = {(0, 0): black_rook, (1, 0): black_knight, (2, 0): black_bishop, (3, 0): black_queen,
+    #                (4,  0): black_king, (5, 0): black_bishop, (6, 0): black_knight, (7, 0): black_rook,
+    #                (0, 1): black_pawn1, (1, 1): black_pawn, (2, 1): black_pawn, (3, 1): black_pawn, (4, 1): black_pawn,
+    #                (5, 1): black_pawn, (6, 1): black_pawn, (7, 1): black_pawn,
+    #
+    #                (0, 6): white_pawn, (1, 6): white_pawn, (2, 6): white_pawn, (3, 6): white_pawn, (4, 6): white_pawn,
+    #                (5, 6): white_pawn, (6, 6): white_pawn, (7, 6): white_pawn, (0, 7): white_rook, (1, 7): white_knight,
+    #                (2, 7): white_bishop, (3, 7): white_queen, (4, 7): white_king, (5, 7): white_bishop,
+    #                (6, 7): white_knight, (7, 7): white_rook}
 
-                   (0, 6): white_pawn, (1, 6): white_pawn, (2, 6): white_pawn, (3, 6): white_pawn, (4, 6): white_pawn,
-                   (5, 6): white_pawn, (6, 6): white_pawn, (7, 6): white_pawn, (0, 7): white_rook, (1, 7): white_knight,
-                   (2, 7): white_bishop, (3, 7): white_queen, (4, 7): white_king, (5, 7): white_bishop,
-                   (6, 7): white_knight, (7, 7): white_rook}
+    chess_board = {(0, 0): black_rook1, (1, 0): black_knight1, (2, 0): black_bishop1, (3, 0): black_queen1,
+                   (4, 0): black_king1, (5, 0): black_bishop2, (6, 0): black_knight2, (7, 0): black_rook2,
+                   (0, 1): black_pawn1, (1, 1): black_pawn2, (2, 1): black_pawn3, (3, 1): black_pawn4, (4, 1): black_pawn5,
+                   (5, 1): black_pawn6, (6, 1): black_pawn7, (7, 1): black_pawn8,
+
+                   (0, 6): white_pawn1, (1, 6): white_pawn2, (2, 6): white_pawn3, (3, 6): white_pawn4, (4, 6): white_pawn5,
+                   (5, 6): white_pawn6, (6, 6): white_pawn7, (7, 6): white_pawn8, (0, 7): white_rook1, (1, 7): white_knight1,
+                   (2, 7): white_bishop1, (3, 7): white_queen1, (4, 7): white_king1, (5, 7): white_bishop2,
+                   (6, 7): white_knight2, (7, 7): white_rook2}
+
+
+
+
+
 
     def get_highlighted_box(self):
 
@@ -68,6 +141,10 @@ class Chess(object):
         return self.white_pieces
 
     def update_game_piece(self, cords, game_piece):
+
+        print(type(game_piece))
+
+        print(f"Updating game piece")
 
         self.chess_board[cords] = game_piece
 
@@ -165,6 +242,16 @@ def init_board():
         screen.blit(black_pieces_list[1][0], (625, 25))
         screen.blit(black_pieces_list[0][0], (725, 25))
 
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[7].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
+
+
         black_pawn_x_pos = 25
         for x in range(8):
 
@@ -206,11 +293,13 @@ def init_board():
 
             if chess.get_chess_board()[pieces] is not None:
 
-                #print(chess.get_chess_board()[pieces][0])
+                screen.blit(chess.get_chess_board()[pieces].get_image(), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+
+                # if pieces
 
                 #test = chess.get_chess_board()[pieces][0]
 
-                screen.blit((chess.get_chess_board()[pieces][0]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+                #screen.blit((chess.get_chess_board()[pieces][0]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
 
             #print(chess.get_chess_board()[pieces])
 
@@ -254,7 +343,7 @@ def highlight_box(box_cords):
         if chess.get_chess_board()[chess.get_highlighted_box()] is not None:
 
             # Checks if that game piece can make that move
-            if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()][1],
+            if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()].get_name(),
                                             chess.get_highlighted_box(), box_cords, chess.get_chess_board()):
 
                 temp = chess.get_chess_board()[chess.get_highlighted_box()]
@@ -262,9 +351,13 @@ def highlight_box(box_cords):
                 chess.update_game_piece(chess.get_highlighted_box(), None)
                 chess.update_game_piece(box_cords, temp)
 
+                #chess.set_highlighted_box((-1, -1))
+
 
     # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
-    if chess.get_highlighted_box() != box_cords:
+    if chess.get_highlighted_box() != box_cords and chess.get_highlighted_box() != (-1, -1):
+
+        print("Recursion")
 
         # This makes it so you cant draw with the boxes
         highlight_box(chess.get_highlighted_box())
