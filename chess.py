@@ -146,7 +146,7 @@ class Chess(object):
 
     def update_game_piece(self, cords, game_piece):
 
-        print(type(game_piece))
+        # print(type(game_piece))
 
         print(f"Updating game piece")
 
@@ -165,7 +165,7 @@ def init_board():
 
     pygame.init()
 
-    size = width, height = 800, 800
+    size = width, height = 1000, 800
 
     global screen
 
@@ -335,10 +335,20 @@ def highlight_box(box_cords):
 
     #print(chess.get_chess_board()[box_cords][1])
 
-    #try:
+    x_pos = -1
+    y_pos = -1
 
-    x_pos = box_cords[0] * 100
-    y_pos = box_cords[1] * 100
+    try:
+
+        x_pos = box_cords[0] * 100
+        y_pos = box_cords[1] * 100
+
+    except:
+
+        print("No pos found")
+
+        # Breaks out of function
+        return None
 
     # Checks if the last highlighted box is in the chess_board keys
     if chess.get_highlighted_box() in chess.get_chess_board().keys():
@@ -352,11 +362,12 @@ def highlight_box(box_cords):
 
                 temp = chess.get_chess_board()[chess.get_highlighted_box()]
 
+                # Sets the previous box to None
                 chess.update_game_piece(chess.get_highlighted_box(), None)
+                # Sets the new box to whichever piece was moving
                 chess.update_game_piece(box_cords, temp)
 
-                #chess.set_highlighted_box((-1, -1))
-
+                # chess.set_highlighted_box(box_cords)
 
     # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
     if chess.get_highlighted_box() != box_cords and chess.get_highlighted_box() != (-1, -1):
@@ -365,6 +376,8 @@ def highlight_box(box_cords):
 
         # This makes it so you cant draw with the boxes
         highlight_box(chess.get_highlighted_box())
+        #
+        highlight_box(box_cords)
 
     # Checks if user is selecting the highlighted box to unselect it
     if chess.get_highlighted_box() == box_cords:
