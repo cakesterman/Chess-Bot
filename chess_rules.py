@@ -113,7 +113,17 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     elif game_piece == "Black Knight" or game_piece == "White Knight":
 
-        if pos_to_move in knight_calculate_all_possible_moves(current_pos, chess_board):
+        moves, captures = knight_calculate_all_possible_moves(current_pos, chess_board)
+
+        print(f"Can capture {captures}")
+
+        if pos_to_move in moves:
+
+            return True
+
+        elif pos_to_move in captures:
+
+            print("Capturing")
 
             return True
 
@@ -173,7 +183,10 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
 def knight_calculate_all_possible_moves(current_pos, chess_board):
 
+    player = chess_board.get(current_pos).get_player_side()
+
     all_possible_moves = []
+    all_possible_captures = []
 
     def check_bounds_and_chess_board(x, y):
 
@@ -182,6 +195,10 @@ def knight_calculate_all_possible_moves(current_pos, chess_board):
             if chess_board.get((x, y)) is None:
 
                 all_possible_moves.append((x, y))
+
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                all_possible_captures.append((x, y))
 
     for x in range(8):
 
@@ -219,7 +236,9 @@ def knight_calculate_all_possible_moves(current_pos, chess_board):
 
                 check_bounds_and_chess_board(x, y)
 
-    return all_possible_moves
+    print(all_possible_captures)
+
+    return all_possible_moves, all_possible_captures
 
 
 def bishop_calculate_all_possible_moves(current_pos, chess_board):
