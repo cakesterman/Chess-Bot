@@ -133,7 +133,15 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     elif game_piece == "Black Bishop" or game_piece == "White Bishop":
 
-        if pos_to_move in bishop_calculate_all_possible_moves(current_pos, chess_board):
+        moves, captures = bishop_calculate_all_possible_moves(current_pos, chess_board)
+
+        if pos_to_move in moves:
+
+            return True
+
+        elif pos_to_move in captures:
+
+            print("Capturing")
 
             return True
 
@@ -243,7 +251,10 @@ def knight_calculate_all_possible_moves(current_pos, chess_board):
 
 def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
+    player = chess_board.get(current_pos).get_player_side()
+
     all_possible_moves = []
+    all_possible_captures = []
 
     def search_left_down_diagonally():
 
@@ -264,6 +275,13 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                 #print("At location ({}, {})".format(x, y))
 
                 all_possible_moves.append((x, y))
+
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 0 or y == 7:
+                    possible = False
+
+                all_possible_captures.append((x, y))
 
             else:
 
@@ -289,6 +307,13 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
                 all_possible_moves.append((x, y))
 
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 7 or y == 7:
+                    possible = False
+
+                all_possible_captures.append((x, y))
+
             else:
 
                 possible = False
@@ -313,6 +338,13 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
                 all_possible_moves.append((x, y))
 
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 0 or y == 0:
+                    possible = False
+
+                all_possible_captures.append((x, y))
+
             else:
 
                 possible = False
@@ -336,6 +368,13 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                 #print("At location ({}, {})".format(x, y))
 
                 all_possible_moves.append((x, y))
+
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 7 or y == 0:
+                    possible = False
+
+                all_possible_captures.append((x, y))
 
             else:
 
@@ -379,7 +418,7 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
             search_left_up_diagonally()
             search_left_down_diagonally()
 
-    return all_possible_moves
+    return all_possible_moves, all_possible_captures
 
 
 def queen_calculate_all_possible_moves(current_pos, chess_board):
