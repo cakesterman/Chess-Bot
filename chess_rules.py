@@ -7,115 +7,23 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     if game_piece == "Black Rook" or game_piece == "White Rook":
 
-        if pos_to_move[0] == current_pos[0] or pos_to_move[1] == current_pos[1]:
+        moves, captures = rook_calculate_all_possible_moves(current_pos, chess_board)
 
-            # If Y cord on pos_to_move equals Y cord on current_pos, we are moving horizontal
-            if pos_to_move[1] == current_pos[1]:
+        if pos_to_move in moves:
 
-                # Checks if we are moving to the right or left
-                if pos_to_move[0] > current_pos[0]:
+            return True
 
-                    # Checks every square in x direction and checks if there is a piece blocking it.
-                    # This only checks going right to left, not left to right
-                    for x in range(current_pos[0] + 1, pos_to_move[0] + 1):
+        elif pos_to_move in captures:
 
-                        print("Checking position ({},{})".format(x, current_pos[1]))
+            print("Capturing")
 
-                        if (x, current_pos[1]) not in chess_board or chess_board[(x, pos_to_move[1])] is None:
-
-                            print("Path at ({},{}) is empty".format(x, pos_to_move[1]))
-
-                        else:
-
-                            print("Invalid move, game piece {} is in the way".format(chess_board[(x, pos_to_move[1])].get_name()))
-                            #print(chess_board[(x, pos_to_move[1])].get_name())
-                            return False
-
-                    print("Valid move")
-                    print("Moving horizontal to the right")
-
-                    return True
-
-                else:
-
-                    temp_current_pos = current_pos[0] - 1
-
-                    while pos_to_move[0] <= temp_current_pos:
-
-                        print("Checking position ({},{})".format(temp_current_pos, current_pos[1]))
-
-                        if (temp_current_pos, current_pos[1]) not in chess_board or chess_board[(temp_current_pos, pos_to_move[1])] is None:
-
-                            print("Path at ({},{}) is empty".format(temp_current_pos, pos_to_move[1]))
-
-                        else:
-
-                            print("Invalid move, game piece {} is in the way".format( chess_board[ (temp_current_pos, pos_to_move[1]) ].get_name() ))
-                            return False
-
-                        temp_current_pos -= 1
-
-                    return True
-
-            else:
-
-                # Checks if Rook is moving up or down
-                if pos_to_move[1] > current_pos[1]:
-
-                    # Checks every square in Y direction and sees if a game piece is blocking it
-                    for y in range(current_pos[1] + 1, pos_to_move[1] + 1):
-
-                        print("Checking position ({},{})".format(current_pos[0], y))
-
-                        if (current_pos[0], y) not in chess_board or chess_board[(current_pos[0], y)] is None:
-
-                            print("Path at ({},{}) is empty".format(current_pos[0], y))
-
-                        else:
-
-                            print("Invalid move, game piece {} is in the way".format(chess_board[(current_pos[0], y)]))
-                            return False
-
-                    print("Valid move")
-                    print("Moving vertical")
-
-                    return True
-
-                else:
-
-                    temp_current_pos = current_pos[1] - 1
-
-                    while pos_to_move[1] <= temp_current_pos:
-
-                        print("Checking position ({},{})".format(current_pos[0], temp_current_pos))
-
-                        # This if statement was broken and backwards causing rooks not being able to move
-                        # if (temp_current_pos, current_pos[1]) not in chess_board or chess_board[
-                        #     (temp_current_pos, pos_to_move[1])] is None:
-                        if (current_pos[0], temp_current_pos) not in chess_board or chess_board[
-                            (current_pos[0], temp_current_pos)] is None:
-
-                            print("Path at ({},{}) is empty".format(temp_current_pos, pos_to_move[1]))
-
-                        else:
-
-                            print("Invalid move, game piece {} is in the way".format(
-                                chess_board[(temp_current_pos, pos_to_move[1])]))
-                            return False
-
-                        temp_current_pos -= 1
-
-                    return True
-
-        else:
-
-            return False
+            return True
 
     elif game_piece == "Black Knight" or game_piece == "White Knight":
 
         moves, captures = knight_calculate_all_possible_moves(current_pos, chess_board)
 
-        print(f"Can capture {captures}")
+        #print(f"Can capture {captures}")
 
         if pos_to_move in moves:
 
@@ -187,6 +95,99 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
     else:
 
         return True
+
+
+def rook_calculate_all_possible_moves(current_pos, chess_board):
+
+    player = chess_board.get(current_pos).get_player_side()
+
+    all_possible_moves = []
+    all_possible_captures = []
+
+    x = current_pos[0]
+    y = current_pos[1]
+
+    # New code for Rook, probably broke some shit, ill find out later
+
+    # Checking x axis going left and right
+    if 0 <= x <= 7:
+
+        # x is between 0 and 7
+
+        # Check x axis going left
+        for index in range(x - 1, 0, -1):
+
+            # If the position is empty, add to all_possible_moves
+            if chess_board.get((index, y)) is None:
+
+                all_possible_moves.append( (index, y) )
+
+            # If the position is not empty and is an enemy piece, add to all_possible_captures
+            elif chess_board.get((index, y)).get_player_side() != player:
+
+                all_possible_captures.append( (index, y) )
+
+                break
+
+            else:
+
+                break
+
+        # Checking x axis going right
+        for index in range(x + 1, 7):
+
+            # If the position is empty, add to all_possible_moves
+            if chess_board.get((index, y)) is None:
+
+                all_possible_moves.append((index, y))
+
+            # If the position is not empty and is an enemy piece, add to all_possible_captures
+            elif chess_board.get((index, y)).get_player_side() != player:
+
+                all_possible_captures.append((index, y))
+
+                break
+
+            else:
+
+                break
+
+    # Checking y axis
+    if 0 <= y <= 7:
+
+        # Check y axis going up
+        for index in range(y - 1, 0, -1):
+
+            if chess_board.get((x, index)) is None:
+
+                print("adding")
+
+                all_possible_moves.append( (x, index) )
+
+            elif chess_board.get((x, index)).get_player_side() != player:
+
+                all_possible_captures.append((x, index))
+
+            else:
+
+                break
+
+        # Check y axis going down
+        for index in range(y + 1, 7):
+
+            if chess_board.get((x, index)) is None:
+
+                all_possible_moves.append((x, index))
+
+            elif chess_board.get((x, index)).get_player_side() != player:
+
+                all_possible_captures.append((x, index))
+
+            else:
+
+                break
+
+    return all_possible_moves, all_possible_captures
 
 
 def knight_calculate_all_possible_moves(current_pos, chess_board):
