@@ -7,12 +7,13 @@ class Chess(object):
 
         # self.image = ''
 
-        def __init__(self, image, name, id):
+        def __init__(self, image, name, id, player):
 
             self.image = image
             self.name = name
             self.id = id
             self.is_first_move = True
+            self.player = player
 
         def get_image(self):
 
@@ -30,39 +31,43 @@ class Chess(object):
 
             self.is_first_move = False
 
-    black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1)
-    black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2)
-    black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1)
-    black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 2)
-    black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 1)
-    black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 2)
-    black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 1)
-    black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 1)
-    black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 1)
-    black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 2)
-    black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 3)
-    black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 4)
-    black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 5)
-    black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 6)
-    black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 7)
-    black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 8)
+        def get_player_side(self):
 
-    white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1)
-    white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2)
-    white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 1)
-    white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 2)
-    white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 1)
-    white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 2)
-    white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 1)
-    white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 1)
-    white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 1)
-    white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 2)
-    white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 3)
-    white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 4)
-    white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 5)
-    white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 6)
-    white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 7)
-    white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 8)
+            return self.player
+
+    black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1, 2)
+    black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2, 2)
+    black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1, 2)
+    black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 2, 2)
+    black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 1, 2)
+    black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 2, 2)
+    black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 1, 2)
+    black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 1, 2)
+    black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 1, 2)
+    black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 2, 2)
+    black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 3, 2)
+    black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 4, 2)
+    black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 5, 2)
+    black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 6, 2)
+    black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 7, 2)
+    black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 8, 2)
+
+    white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1, 1)
+    white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2, 1)
+    white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 1, 1)
+    white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 2, 1)
+    white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 1, 1)
+    white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 2, 1)
+    white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 1, 1)
+    white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 1, 1)
+    white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 1, 1)
+    white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 2, 1)
+    white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 3, 1)
+    white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 4, 1)
+    white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 5, 1)
+    white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 6, 1)
+    white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 7, 1)
+    white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 8, 1)
 
     highlighted_box = (-1, -1)
 
@@ -111,10 +116,16 @@ class Chess(object):
                    (2, 7): white_bishop1, (3, 7): white_queen1, (4, 7): white_king1, (5, 7): white_bishop2,
                    (6, 7): white_knight2, (7, 7): white_rook2}
 
+    # 1 = White, 2 = Black
+    turn = 1
 
+    def get_turn(self):
 
+        return self.turn
 
+    def set_turn(self, player_turn):
 
+        self.turn = player_turn
 
     def get_highlighted_box(self):
 
@@ -283,32 +294,22 @@ def init_board():
     draw_boxes()
     init_game_pieces()
 
-    def update_board():
 
-        draw_game_pieces()
-
-    def draw_game_pieces():
-
-        #print(chess.get_chess_board())
-
-
-
-        for pieces in chess.get_chess_board():
-
-            if chess.get_chess_board()[pieces] is not None:
-
-                screen.blit(chess.get_chess_board()[pieces].get_image(), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
-
-                # if pieces
-
-                #test = chess.get_chess_board()[pieces][0]
-
-                #screen.blit((chess.get_chess_board()[pieces][0]), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
-
-            #print(chess.get_chess_board()[pieces])
 
     # Game loop
     while 1:
+
+        # Turns
+
+        # White goes first, then once white makes a move, black makes a move
+
+        if chess.get_turn() == 1:
+
+            update_turn(screen, "White's Turn")
+
+        elif chess.get_turn() == 2:
+
+            update_turn(screen, "Black's Turn")
 
         for event in pygame.event.get():
 
@@ -320,11 +321,56 @@ def init_board():
 
                 mouse_pos = pygame.mouse.get_pos()
 
-                #print(check_bounds(mouse_pos))
-                highlight_box(check_bounds(mouse_pos))
-                update_board()
+                board_pos = check_bounds(mouse_pos, screen)
+
+                # if board_pos not in chess.get_chess_board().keys() or \
+                #         chess.get_chess_board()[board_pos].get_player_side() == chess.get_turn():
+                #
+                #     print(2)
+                #
+                #     # print(check_bounds(mouse_pos))
+                #     highlight_box(board_pos)
+                #     update_board(screen)
+
+                # if board_pos not in chess.get_chess_board().keys() :
+                #
+                #     print(2)
+                #
+                #     # print(check_bounds(mouse_pos))
+                #     highlight_box(board_pos)
+                #     update_board(screen)
+
+                highlight_box(board_pos)
+                update_board(screen)
 
         pygame.display.flip()
+
+
+def update_board(screen):
+
+    draw_game_pieces(screen)
+
+
+def draw_game_pieces(screen):
+
+    #print(chess.get_chess_board())
+
+    for pieces in chess.get_chess_board():
+
+        if chess.get_chess_board()[pieces] is not None:
+
+            screen.blit(chess.get_chess_board()[pieces].get_image(), (pieces[0] * 100 + 25, pieces[1] * 100 + 25))
+
+
+def update_turn(screen, player):
+
+    WHITE = (255, 255, 255)
+
+    font = pygame.font.Font('freesansbold.ttf', 32)
+
+    text = font.render(player, True, WHITE)
+
+    screen.blit(text, (800, 400))
 
 
 def highlight_box(box_cords):
@@ -333,7 +379,8 @@ def highlight_box(box_cords):
 
     # Will break if the user selects a pixel such as 100, 200, 300, 400...
 
-    #print(chess.get_chess_board()[box_cords][1])
+    # False by default to keep a box highlighted when selecting empty boxes
+    box_deselect = False
 
     x_pos = -1
     y_pos = -1
@@ -356,9 +403,20 @@ def highlight_box(box_cords):
         # Checks if the last highlighted box value in chess_board is not None
         if chess.get_chess_board()[chess.get_highlighted_box()] is not None:
 
-            # Checks if that game piece can make that move
+            print("Not none")
+
+            if chess.get_chess_board()[chess.get_highlighted_box()].get_name()[0:5] == "White" and chess.get_turn() == 2:
+
+                print("Capture White piece")
+
+            elif chess.get_chess_board()[chess.get_highlighted_box()].get_name()[0:5] == "Black" and chess.get_turn() == 1:
+
+                print("Capture Black piece")
+
+            # Checks if that game piece can make that move and that it is the correct piece turn
             if chess_rules.check_valid_move(chess.get_chess_board()[chess.get_highlighted_box()].get_name(),
-                                            chess.get_highlighted_box(), box_cords, chess.get_chess_board()):
+                                            chess.get_highlighted_box(), box_cords, chess.get_chess_board()) and \
+                    chess.get_chess_board()[chess.get_highlighted_box()].get_player_side() == chess.get_turn():
 
                 temp = chess.get_chess_board()[chess.get_highlighted_box()]
 
@@ -367,16 +425,40 @@ def highlight_box(box_cords):
                 # Sets the new box to whichever piece was moving
                 chess.update_game_piece(box_cords, temp)
 
-                # chess.set_highlighted_box(box_cords)
+                # Set to true to deselect box after making move
+                box_deselect = True
+
+                if chess.get_turn() == 1:
+
+                    chess.set_turn(2)
+
+                else:
+
+                    chess.set_turn(1)
+
+            else:
+
+                print("Cant move there")
+
+        # Else piece lands on another piece
+        else:
+
+            print("Is none")
+
+
 
     # Checks if the new box cords is different from the last, if it is, sets the last box cords to normal color
     if chess.get_highlighted_box() != box_cords and chess.get_highlighted_box() != (-1, -1):
 
-        print("Recursion")
+        print(f"Un-highlighting {chess.get_highlighted_box()} and highlighting {box_cords}")
 
         # This makes it so you cant draw with the boxes
         highlight_box(chess.get_highlighted_box())
-        #
+
+        # if box_deselect is True, it deselects the box after a user makes a move
+        if not box_deselect:
+            chess.set_highlighted_box(box_cords)
+
         highlight_box(box_cords)
 
     # Checks if user is selecting the highlighted box to unselect it
@@ -414,7 +496,7 @@ def highlight_box(box_cords):
 
         chess.set_highlighted_box(box_cords)
 
-    print(x_pos, y_pos)
+    #print(x_pos, y_pos)
 
     return box_cords
 
@@ -423,52 +505,52 @@ def highlight_box(box_cords):
     #    print("No value")
 
 
-def check_bounds(mouse_pos):
+def check_bounds(mouse_pos, screen):
 
     # chess_bounds is a list of dictionaries.
     # The keys are start_pos of x, end_pos of x, start_pos of y and end_pos of y
 
     # (x_start, x_end, y_start, y_end): (position_name, (location_on_board))
 
-    chess_bounds = [{(0, 99, 0, 99): ("Alpha 8", (0, 0)), (101, 199, 0, 99): ("Bravo 8", (1, 0)),
-                     (201, 299, 0, 99): ("Charlie 8", (2, 0)), (301, 399, 0, 99): ("Delta 8", (3, 0)),
-                     (401, 499, 0, 99): ("Echo 8", (4, 0)), (501, 599, 0, 99): ("Foxtrot 8", (5, 0)),
-                     (601, 699, 0, 99): ("Golf 8", (6, 0)), (701, 800, 0, 99): ("Hotel 8", (7, 0)),
+    chess_bounds = [{(0, 99, 0, 99): ("A 8", (0, 0)), (101, 199, 0, 99): ("B 8", (1, 0)),
+                     (201, 299, 0, 99): ("C 8", (2, 0)), (301, 399, 0, 99): ("D 8", (3, 0)),
+                     (401, 499, 0, 99): ("E 8", (4, 0)), (501, 599, 0, 99): ("F 8", (5, 0)),
+                     (601, 699, 0, 99): ("G 8", (6, 0)), (701, 800, 0, 99): ("H 8", (7, 0)),
 
-                     (0, 99, 101, 199): ("Alpha 7", (0, 1)), (101, 199, 101, 199): ("Bravo 7", (1, 1)),
-                     (201, 299, 101, 199): ("Charlie 7", (2, 1)), (301, 399, 101, 199): ("Delta 7", (3, 1)),
-                     (401, 499, 101, 199): ("Echo 7", (4, 1)), (501, 599, 101, 199): ("Foxtrot 7", (5, 1)),
-                     (601, 699, 101, 199): ("Golf 7", (6, 1)), (701, 799, 101, 199): ("Hotel 7", (7, 1)),
+                     (0, 99, 101, 199): ("A 7", (0, 1)), (101, 199, 101, 199): ("B 7", (1, 1)),
+                     (201, 299, 101, 199): ("C 7", (2, 1)), (301, 399, 101, 199): ("Delta 7", (3, 1)),
+                     (401, 499, 101, 199): ("E 7", (4, 1)), (501, 599, 101, 199): ("F 7", (5, 1)),
+                     (601, 699, 101, 199): ("G 7", (6, 1)), (701, 799, 101, 199): ("H 7", (7, 1)),
 
-                     (0, 99, 201, 299): ("Alpha 6", (0, 2)), (101, 199, 201, 299): ("Bravo 6", (1, 2)),
-                     (201, 299, 201, 299): ("Charlie 6", (2, 2)), (301, 399, 201, 299): ("Delta 6", (3, 2)),
-                     (401, 499, 201, 299): ("Echo 6", (4, 2)), (501, 599, 201, 299): ("Foxtrot", (5, 2)),
-                     (601, 699, 201, 299): ("Golf 6", (6, 2)), (701, 799, 201, 299): ("Hotel 6", (7, 2)),
+                     (0, 99, 201, 299): ("A 6", (0, 2)), (101, 199, 201, 299): ("B 6", (1, 2)),
+                     (201, 299, 201, 299): ("C 6", (2, 2)), (301, 399, 201, 299): ("D 6", (3, 2)),
+                     (401, 499, 201, 299): ("E 6", (4, 2)), (501, 599, 201, 299): ("F 6", (5, 2)),
+                     (601, 699, 201, 299): ("G 6", (6, 2)), (701, 799, 201, 299): ("H 6", (7, 2)),
 
-                     (0, 99, 301, 399): ("Alpha 5", (0, 3)), (101, 199, 301, 399): ("Bravo 5", (1, 3)),
-                     (201, 299, 301, 399): ("Charlie 5", (2, 3)), (301, 399, 301, 399): ("Delta 5", (3, 3)),
-                     (401, 499, 301, 399): ("Echo 5", (4, 3)), (501, 599, 301, 399): ("Foxtrot 5", (5, 3)),
-                     (601, 699, 301, 399): ("Golf 5", (6, 3)), (701, 799, 301, 399): ("Hotel 5", (7, 3)),
+                     (0, 99, 301, 399): ("A 5", (0, 3)), (101, 199, 301, 399): ("B 5", (1, 3)),
+                     (201, 299, 301, 399): ("C 5", (2, 3)), (301, 399, 301, 399): ("D 5", (3, 3)),
+                     (401, 499, 301, 399): ("E 5", (4, 3)), (501, 599, 301, 399): ("F 5", (5, 3)),
+                     (601, 699, 301, 399): ("G 5", (6, 3)), (701, 799, 301, 399): ("H 5", (7, 3)),
 
-                     (0, 99, 401, 499): ("Alpha 4", (0, 4)), (101, 199, 401, 499): ("Bravo 4", (1, 4)),
-                     (201, 299, 401, 499): ("Charlie 4", (2, 4)), (301, 399, 401, 499): ("Delta 4", (3, 4)),
-                     (401, 499, 401, 499): ("Echo 4", (4, 4)), (501, 599, 401, 499): ("Foxtrot 4", (5, 4)),
-                     (601, 699, 401, 499): ("Golf 4", (6, 4)), (701, 799, 401, 499): ("Hotel 4", (7, 4)),
+                     (0, 99, 401, 499): ("A 4", (0, 4)), (101, 199, 401, 499): ("B 4", (1, 4)),
+                     (201, 299, 401, 499): ("C 4", (2, 4)), (301, 399, 401, 499): ("D 4", (3, 4)),
+                     (401, 499, 401, 499): ("E 4", (4, 4)), (501, 599, 401, 499): ("F 4", (5, 4)),
+                     (601, 699, 401, 499): ("G 4", (6, 4)), (701, 799, 401, 499): ("H 4", (7, 4)),
 
-                     (0, 99, 501, 599): ("Alpha 3", (0, 5)), (101, 199, 501, 599): ("Bravo 3", (1, 5)),
-                     (201, 299, 501, 599): ("Charlie 3", (2, 5)), (301, 399, 501, 599): ("Delta 3", (3, 5)),
-                     (401, 499, 501, 599): ("Echo 3", (4, 5)), (501, 599, 501, 599): ("Foxtrot 3", (5, 5)),
-                     (601, 699, 501, 599): ("Golf 3", (6, 5)), (701, 799, 501, 599): ("Hotel 3", (7, 5)),
+                     (0, 99, 501, 599): ("A 3", (0, 5)), (101, 199, 501, 599): ("B 3", (1, 5)),
+                     (201, 299, 501, 599): ("C 3", (2, 5)), (301, 399, 501, 599): ("D 3", (3, 5)),
+                     (401, 499, 501, 599): ("E 3", (4, 5)), (501, 599, 501, 599): ("F 3", (5, 5)),
+                     (601, 699, 501, 599): ("G 3", (6, 5)), (701, 799, 501, 599): ("H 3", (7, 5)),
 
-                     (0, 99, 601, 699): ("Alpha 2", (0, 6)), (101, 199, 601, 699): ("Bravo 2", (1, 6)),
-                     (201, 299, 601, 699): ("Charlie 2", (2, 6)), (301, 399, 601, 699): ("Delta 2", (3, 6)),
-                     (401, 499, 601, 699): ("Echo 2", (4, 6)), (501, 599, 601, 699): ("Foxtrot 2", (5, 6)),
-                     (601, 699, 601, 699): ("Golf 2", (6, 6)), (701, 799, 601, 699): ("Hotel 2", (7, 6)),
+                     (0, 99, 601, 699): ("A 2", (0, 6)), (101, 199, 601, 699): ("B 2", (1, 6)),
+                     (201, 299, 601, 699): ("C 2", (2, 6)), (301, 399, 601, 699): ("D 2", (3, 6)),
+                     (401, 499, 601, 699): ("E 2", (4, 6)), (501, 599, 601, 699): ("F 2", (5, 6)),
+                     (601, 699, 601, 699): ("G 2", (6, 6)), (701, 799, 601, 699): ("H 2", (7, 6)),
 
-                     (0, 99, 701, 799): ("Alpha 1", (0, 7)), (101, 199, 701, 799): ("Bravo 1", (1, 7)),
-                     (201, 299, 701, 799): ("Charlie 1", (2, 7)), (301, 399, 701, 799): ("Delta 1", (3, 7)),
-                     (401, 499, 701, 799): ("Echo 1", (4, 7)), (501, 599, 701, 799): ("Foxtrot 1", (5, 7)),
-                     (601, 699, 701, 799): ("Golf 1", (6, 7)), (701, 799, 701, 799): ("Hotel 1", (7, 7))
+                     (0, 99, 701, 799): ("A 1", (0, 7)), (101, 199, 701, 799): ("B 1", (1, 7)),
+                     (201, 299, 701, 799): ("C 1", (2, 7)), (301, 399, 701, 799): ("D 1", (3, 7)),
+                     (401, 499, 701, 799): ("E 1", (4, 7)), (501, 599, 701, 799): ("F 1", (5, 7)),
+                     (601, 699, 701, 799): ("G 1", (6, 7)), (701, 799, 701, 799): ("H 1", (7, 7))
                      }]
 
     for bounds_dict in chess_bounds:
@@ -477,7 +559,19 @@ def check_bounds(mouse_pos):
 
             if bounds[0] < mouse_pos[0] < bounds[1] and bounds[2] < mouse_pos[1] < bounds[3]:
 
-                print("We are in", bounds_dict[bounds])
+                white = (255, 255, 255)
+                black = (0, 0, 0)
+
+                # Fills the screen with black to reset the previous text display
+                screen.fill(black, rect=(801, 0, 199, 800))
+
+                font = pygame.font.Font('freesansbold.ttf', 30)
+
+                text = font.render(bounds_dict[bounds][0], True, white)
+
+                screen.blit(text, (800, 0))
+
+                print("We are in", bounds_dict[bounds][0])
 
                 return bounds_dict[bounds][1]
 
