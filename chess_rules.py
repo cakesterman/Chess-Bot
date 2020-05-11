@@ -93,7 +93,15 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     elif game_piece == "Black Pawn" or game_piece == "White Pawn":
 
-        if pos_to_move in pawn_calculate_all_possible_moves(current_pos, chess_board):
+        moves, captures = pawn_calculate_all_possible_moves(current_pos, chess_board)
+
+        if pos_to_move in moves:
+
+            chess_board[current_pos].set_first_move_false()
+
+            return True
+
+        elif pos_to_move in captures:
 
             chess_board[current_pos].set_first_move_false()
 
@@ -753,7 +761,10 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
 
 def pawn_calculate_all_possible_moves(current_pos, chess_board):
 
+    player = chess_board.get(current_pos).get_player_side()
+
     all_possible_moves = []
+    all_possible_captures = []
 
     x = current_pos[0]
     y = current_pos[1]
@@ -771,15 +782,28 @@ def pawn_calculate_all_possible_moves(current_pos, chess_board):
 
     if chess_board[current_pos].get_name()[0:5] == "Black":
 
-        all_possible_moves.append((x, y + 1))
+        if chess_board.get((x, y + 1)) is None:
+
+            all_possible_moves.append((x, y + 1))
+
+        if chess_board.get((x - 1, y + 1)) is not None and chess_board.get((x - 1, y + 1)).get_player_side() != player:
+
+            all_possible_captures.append((x - 1, y + 1))
+
+        if chess_board.get((x + 1, y + 1)) is not None and chess_board.get((x + 1, y + 1)).get_player_side() != player:
+
+            all_possible_captures.append((x + 1, y + 1))
 
     # else pawn is a white piece
     else:
 
-        all_possible_moves.append((x, y - 1))
+        if chess_board.get((x, y - 1)) is None:
+            all_possible_moves.append((x, y + 1))
 
-    return all_possible_moves
+        if chess_board.get((x - 1, y - 1)) is not None and chess_board.get((x - 1, y - 1)).get_player_side() != player:
+            all_possible_captures.append((x - 1, y + 1))
 
-# test = 1
-# knight_calculate_all_possible_moves((0,0), test)
+        if chess_board.get((x + 1, y - 1)) is not None and chess_board.get((x + 1, y - 1)).get_player_side() != player:
+            all_possible_captures.append((x + 1, y + 1))
 
+    return all_possible_moves, all_possible_captures
