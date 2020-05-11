@@ -61,7 +61,13 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     elif game_piece == "Black Queen" or game_piece == "White Queen":
 
-        if pos_to_move in queen_calculate_all_possible_moves(current_pos, chess_board):
+        moves, captures = queen_calculate_all_possible_moves(current_pos, chess_board)
+
+        if pos_to_move in moves:
+
+            return True
+
+        elif pos_to_move in captures:
 
             return True
 
@@ -71,7 +77,13 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
     elif game_piece == "Black King" or game_piece == "White King":
 
-        if pos_to_move in king_calculate_all_possible_moves(current_pos, chess_board):
+        moves, captures = king_calculate_all_possible_moves(current_pos, chess_board)
+
+        if pos_to_move in moves:
+
+            return True
+
+        elif pos_to_move in captures:
 
             return True
 
@@ -424,9 +436,15 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
 def queen_calculate_all_possible_moves(current_pos, chess_board):
 
-    all_possible_moves = []
+    player = chess_board.get(current_pos).get_player_side()
 
-    all_possible_moves.extend(bishop_calculate_all_possible_moves(current_pos, chess_board))
+    all_possible_moves = []
+    all_possible_captures = []
+
+    moves, captures = bishop_calculate_all_possible_moves(current_pos, chess_board)
+
+    all_possible_moves.extend(moves)
+    all_possible_captures.extend(captures)
 
     def search_down():
 
@@ -445,6 +463,14 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_moves.append((x, y))
+
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if y == 7:
+
+                    possible = False
+
+                all_possible_captures.append((x, y))
 
             else:
 
@@ -467,6 +493,14 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
 
                 all_possible_moves.append((x, y))
 
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if y == 0:
+
+                    possible = False
+
+                all_possible_captures.append((x, y))
+
             else:
 
                 possible = False
@@ -488,6 +522,14 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
 
                 all_possible_moves.append((x, y))
 
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 0:
+
+                    possible = False
+
+                all_possible_captures.append((x, y))
+
             else:
 
                 possible = False
@@ -508,6 +550,14 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_moves.append((x, y))
+
+            elif chess_board.get((x, y)).get_player_side() != player:
+
+                if x == 7:
+
+                    possible = False
+
+                all_possible_captures.append((x, y))
 
             else:
 
@@ -552,45 +602,100 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
         search_up()
         search_down()
 
-    print(all_possible_moves)
-    return all_possible_moves
+    #print(all_possible_moves)
+    return all_possible_moves, all_possible_captures
 
 
 def king_calculate_all_possible_moves(current_pos, chess_board):
 
+    player = chess_board.get(current_pos).get_player_side()
+
     all_possible_moves = []
+    all_possible_captures = []
+
+    x = current_pos[0]
+    y = current_pos[1]
 
     def search_down():
 
-        all_possible_moves.append((current_pos[0], (current_pos[1] + 1)))
+        if chess_board.get((x, y + 1)) is None:
+
+            all_possible_moves.append((current_pos[0], (current_pos[1] + 1)))
+
+        elif chess_board.get((x, y + 1)).get_player_side() != player:
+
+            all_possible_captures.append((x, y + 1))
 
     def search_up():
 
-        all_possible_moves.append((current_pos[0], (current_pos[1] - 1)))
+        if chess_board.get((x, y - 1)) is None:
+
+            all_possible_moves.append((current_pos[0], (current_pos[1] - 1)))
+
+        elif chess_board.get((x, y - 1)).get_player_side() != player:
+
+            all_possible_captures.append((x, y - 1))
 
     def search_left():
 
-        all_possible_moves.append((current_pos[0] - 1, current_pos[1]))
+        if chess_board.get((x - 1, y)) is None:
+
+            all_possible_moves.append((current_pos[0] - 1, current_pos[1]))
+
+        elif chess_board.get((x - 1, y)).get_player_side() != player:
+
+            all_possible_captures.append((x - 1, y))
 
     def search_right():
 
-        all_possible_moves.append((current_pos[0] + 1, current_pos[1]))
+        if chess_board.get((x + 1, y)) is None:
+
+            all_possible_moves.append((current_pos[0] + 1, current_pos[1]))
+
+        elif chess_board.get((x + 1, y)).get_player_side() != player:
+
+            all_possible_captures.append((x + 1, y))
 
     def search_left_up_diagonally():
 
-        all_possible_moves.append((current_pos[0] - 1, current_pos[1] - 1))
+        if chess_board.get((x - 1, y - 1)) is None:
+
+            all_possible_moves.append((current_pos[0] - 1, current_pos[1] - 1))
+
+        elif chess_board.get((x - 1, y - 1)).get_player_side() != player:
+
+            all_possible_captures.append((x - 1, y - 1))
 
     def search_left_down_diagonally():
 
-        all_possible_moves.append((current_pos[0] - 1, current_pos[1] + 1))
+        if chess_board.get((x - 1, y + 1)) is None:
+
+            all_possible_moves.append((current_pos[0] - 1, current_pos[1] + 1))
+
+        elif chess_board.get((x - 1, y + 1)).get_player_side() != player:
+
+            all_possible_captures.append((x - 1, y + 1))
+
 
     def search_right_up_diagonally():
 
-        all_possible_moves.append((current_pos[0] + 1, current_pos[1] - 1))
+        if chess_board.get((x + 1, y - 1)) is None:
+
+            all_possible_moves.append((current_pos[0] + 1, current_pos[1] - 1))
+
+        elif chess_board.get((x + 1, y - 1)).get_player_side() != player:
+
+            all_possible_captures.append((x + 1, y - 1))
 
     def search_right_down_diagonally():
 
-        all_possible_moves.append((current_pos[0] + 1, current_pos[1] + 1))
+        if chess_board.get((x + 1, y + 1)) is None:
+
+            all_possible_moves.append((current_pos[0] + 1, current_pos[1] + 1))
+
+        elif chess_board.get((x + 1, y + 1)).get_player_side() != player:
+
+            all_possible_captures.append((x + 1, y + 1))
 
     # y == 0 and 0 < x < 7
     if current_pos[1] == 0 and 0 < current_pos[0] < 7:
@@ -644,7 +749,7 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
         search_left_down_diagonally()
         search_right_down_diagonally()
 
-    return all_possible_moves
+    return all_possible_moves, all_possible_captures
 
 def pawn_calculate_all_possible_moves(current_pos, chess_board):
 
