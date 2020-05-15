@@ -11,13 +11,15 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         if pos_to_move in moves:
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
             print("Capturing")
 
-            return True
+            return True, moves, captures
+
+        return False, moves, captures
 
     elif game_piece == "Black Knight" or game_piece == "White Knight":
 
@@ -27,17 +29,17 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         if pos_to_move in moves:
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
             print("Capturing")
 
-            return True
+            return True, moves, captures
 
         else:
 
-            return False
+            return False, moves, captures
 
     elif game_piece == "Black Bishop" or game_piece == "White Bishop":
 
@@ -45,17 +47,17 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         if pos_to_move in moves:
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
             print("Capturing")
 
-            return True
+            return True, moves, captures
 
         else:
 
-            return False
+            return False, moves, captures
 
         #print(bishop_calculate_all_possible_moves(current_pos, chess_board))
 
@@ -65,15 +67,15 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         if pos_to_move in moves:
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
-            return True
+            return True, moves, captures
 
         else:
 
-            return False
+            return False, moves, captures
 
     elif game_piece == "Black King" or game_piece == "White King":
 
@@ -81,15 +83,15 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
         if pos_to_move in moves:
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
-            return True
+            return True, moves, captures
 
         else:
 
-            return False
+            return False, moves, captures
 
     elif game_piece == "Black Pawn" or game_piece == "White Pawn":
 
@@ -99,17 +101,17 @@ def check_valid_move(game_piece, current_pos, pos_to_move, chess_board):
 
             chess_board[current_pos].set_first_move_false()
 
-            return True
+            return True, moves, captures
 
         elif pos_to_move in captures:
 
             chess_board[current_pos].set_first_move_false()
 
-            return True
+            return True, moves, captures
 
         else:
 
-            return False
+            return False, moves, captures
 
     # Temporary else for testing and moving all other game pieces
     else:
@@ -303,6 +305,7 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -334,6 +337,7 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -365,6 +369,7 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -396,6 +401,7 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -479,6 +485,7 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -508,6 +515,7 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -537,6 +545,7 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -566,6 +575,7 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
                     possible = False
 
                 all_possible_captures.append((x, y))
+                possible = False
 
             else:
 
@@ -798,12 +808,12 @@ def pawn_calculate_all_possible_moves(current_pos, chess_board):
     else:
 
         if chess_board.get((x, y - 1)) is None:
-            all_possible_moves.append((x, y + 1))
+            all_possible_moves.append((x, y - 1))
 
         if chess_board.get((x - 1, y - 1)) is not None and chess_board.get((x - 1, y - 1)).get_player_side() != player:
-            all_possible_captures.append((x - 1, y + 1))
+            all_possible_captures.append((x - 1, y - 1))
 
         if chess_board.get((x + 1, y - 1)) is not None and chess_board.get((x + 1, y - 1)).get_player_side() != player:
-            all_possible_captures.append((x + 1, y + 1))
+            all_possible_captures.append((x + 1, y - 1))
 
     return all_possible_moves, all_possible_captures
