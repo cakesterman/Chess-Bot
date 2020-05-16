@@ -39,6 +39,8 @@ class Chess(object):
 
             return self.player
 
+    run = True
+
     black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1, 2)
     black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2, 2)
     black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1, 2)
@@ -123,6 +125,14 @@ class Chess(object):
     # 1 = White, 2 = Black
     turn = 1
 
+    def is_running(self):
+
+        return self.run
+
+    def end_game(self):
+
+        self.run = False
+
     def get_turn(self):
 
         return self.turn
@@ -186,28 +196,6 @@ def init_board():
 
     screen = pygame.display.set_mode(size)
 
-    #board = [[0, 1, 2, 3, 4, 5, 6, 7], [0, 1, 2, 3, 4, 5, 6, 7]]
-
-    # Lines are pointless after drawing boxes now, will remove later
-    def draw_lines():
-
-        x_line = 100
-        y_line = 100
-
-        for x in range(7):
-
-            pygame.draw.line(screen, (255, 255, 255), (x_line, 0), (x_line, height))
-
-            x_line += 100
-
-        for y in range(7):
-
-            pygame.draw.line(screen, (255, 255, 255), (0, y_line), (width, y_line))
-
-            y_line += 100
-
-
-
     def init_game_pieces():
 
         black_pieces_list = chess.get_black_game_pieces()
@@ -220,16 +208,6 @@ def init_board():
         screen.blit(black_pieces_list[2][0], (525, 25))
         screen.blit(black_pieces_list[1][0], (625, 25))
         screen.blit(black_pieces_list[0][0], (725, 25))
-
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[7].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-        # screen.blit(black_pieces_list[6].get_image(), (25, 125))
-
 
         black_pawn_x_pos = 25
         for x in range(8):
@@ -261,7 +239,7 @@ def init_board():
     counter = 0
 
     # Game loop
-    while 1:
+    while chess.is_running():
 
         # Turns
 
@@ -385,6 +363,7 @@ def update_turn(screen, player):
     screen.blit(text, (800, 400))
 
 
+# Deals with highlighting(single) boxes and moving/capturing game pieces, probably should separate those
 def highlight_box(box_cords):
 
     # Need error conditioning
@@ -425,6 +404,10 @@ def highlight_box(box_cords):
             if is_valid_move and \
                     chess.get_chess_board()[chess.get_highlighted_box()].get_player_side() == chess.get_turn():
 
+                if "King" in chess.get_chess_board().get(chess.get_highlighted_box()).get_name():
+
+                    print("Check")
+
                 temp = chess.get_chess_board()[chess.get_highlighted_box()]
 
                 # Sets the previous box to None
@@ -433,6 +416,8 @@ def highlight_box(box_cords):
                 chess.update_game_piece(box_cords, temp)
 
                 draw_boxes()
+
+                check_for_check()
 
                 # Set to true to deselect box after making move
                 box_deselect = True
@@ -557,10 +542,158 @@ def highlight_box(box_cords):
     #    print("No value")
 
 
+# Checks if the king is in check
+def check_for_check():
+
+    # Check all pieces and see if king is in check, need to get all possible moves/captures for all pieces
+
+    all_possible_moves_white = []
+    all_possible_captures_white = []
+
+    all_possible_moves_black = []
+    all_possible_captures_black = []
+
+    def get_kings_pos():
+
+        for game_piece in chess.get_chess_board():
+
+            if chess.get_chess_board().get(game_piece) is not None:
+
+                # Sets the positions of the kings
+                if chess.get_chess_board().get(game_piece).get_name() == "Black King":
+
+                    black_king_pos = (game_piece[0], game_piece[1])
+
+                elif chess.get_chess_board().get(game_piece).get_name() == "White King":
+
+                    white_king_pos = (game_piece[0], game_piece[1])
+
+        return black_king_pos, white_king_pos
+
+    black_king_pos, white_king_pos = get_kings_pos()
+
+    for game_piece in chess.get_chess_board():
+
+        if chess.get_chess_board().get(game_piece) is not None:
+
+            #print(f"Chess Position: {game_piece} | Chess Name: {chess.get_chess_board().get(game_piece).get_name()}")
+
+            is_valid_move, moves, captures = chess_rules.check_valid_move(
+                chess.get_chess_board()[game_piece].get_name(),
+                game_piece, "", chess.get_chess_board())
+
+            # If player is white
+            if chess.get_chess_board().get(game_piece).get_player_side() == 1:
+
+                all_possible_moves_white.extend(moves)
+                all_possible_captures_white.extend(captures)
+
+            # If player is black
+            else:
+
+                all_possible_moves_black.extend(moves)
+                all_possible_captures_black.extend(captures)
+
+            #print(captures)
+
+            if black_king_pos in captures or white_king_pos in captures:
+
+                # Check for checkmate at this point
+                print("CHECK")
+
+    # This checks for checkmate
+    def check_for_checkmate():
+
+
+        if chess.get_turn() == 2:
+
+            _, white_king_moves, white_king_captures = chess_rules.check_valid_move(
+                "White King", white_king_pos, "", chess.get_chess_board())
+
+            if len(white_king_moves) == 0 and len(white_king_captures) == 0:
+
+                print("WHITE CHECKMATE")
+
+            else:
+
+                for i in white_king_moves:
+
+                    if i in all_possible_moves_black or i in all_possible_captures_black:
+                        print("WHITE CHECKMATE")
+                    else:
+                        return None
+
+                    # End game
+                    return True
+
+        else:
+
+            _, black_king_moves, black_king_captures = chess_rules.check_valid_move(
+                "Black King", black_king_pos, "", chess.get_chess_board())
+
+            # print(f"Black king moves: {black_king_moves}")
+            # print(captures)
+            # print(moves)
+
+            if len(black_king_moves) == 0 and len(captures) == 0:
+
+                print("BLACK CHECKMATE")
+
+            else:
+
+                for i in black_king_moves:
+
+                    if i in all_possible_moves_white or i in all_possible_captures_black:
+
+                        print("BLACK CHECKMATE")
+
+                    else:
+
+                        return None
+
+                    # End game
+                    return True
+
+    if check_for_checkmate():
+
+        end_game()
+
+    #print(f"Black King is at: {black_king_pos}")
+    #print(f"White King is at: {white_king_pos}")
+
+
 def highlight_all_possible_moves(moves, captures, is_highlight):
 
     print(f"Moves: {moves}")
     print(F"Captures: {captures}")
+
+    def reset_box_color(box_type, x_pos, y_pos):
+
+        if (box_type[1] % 2) == 0:
+
+            if (box_type[0] % 2) == 0:
+
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
+                # chess.set_highlighted_box((-1, -1))
+
+            else:
+
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
+                # chess.set_highlighted_box((-1, -1))
+
+        else:
+
+            if (box_type[0] % 2) == 0:
+
+                pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
+                # chess.set_highlighted_box((-1, -1))
+
+            else:
+
+                pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
+                # chess.set_highlighted_box((-1, -1))
+
+        update_board(pygame.display.get_surface())
 
     for move in moves:
 
@@ -576,29 +709,7 @@ def highlight_all_possible_moves(moves, captures, is_highlight):
 
         else:
 
-            if (move[1] % 2) == 0:
-
-                if (move[0] % 2) == 0:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    #chess.set_highlighted_box((-1, -1))
-
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    #chess.set_highlighted_box((-1, -1))
-
-            else:
-
-                if (move[0] % 2) == 0:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    #chess.set_highlighted_box((-1, -1))
-
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    #chess.set_highlighted_box((-1, -1))
+            reset_box_color(move, x_pos, y_pos)
 
     for capture in captures:
 
@@ -612,31 +723,7 @@ def highlight_all_possible_moves(moves, captures, is_highlight):
 
         else:
 
-            if (capture[1] % 2) == 0:
-
-                if (capture[0] % 2) == 0:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    # chess.set_highlighted_box((-1, -1))
-
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    # chess.set_highlighted_box((-1, -1))
-
-            else:
-
-                if (capture[0] % 2) == 0:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color2(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    # chess.set_highlighted_box((-1, -1))
-
-                else:
-
-                    pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
-                    # chess.set_highlighted_box((-1, -1))
-
-            update_board(pygame.display.get_surface())
+            reset_box_color(capture, x_pos, y_pos)
 
 
 def check_bounds(mouse_pos, screen):
@@ -652,7 +739,7 @@ def check_bounds(mouse_pos, screen):
                      (601, 699, 0, 99): ("G 8", (6, 0)), (701, 800, 0, 99): ("H 8", (7, 0)),
 
                      (0, 99, 101, 199): ("A 7", (0, 1)), (101, 199, 101, 199): ("B 7", (1, 1)),
-                     (201, 299, 101, 199): ("C 7", (2, 1)), (301, 399, 101, 199): ("Delta 7", (3, 1)),
+                     (201, 299, 101, 199): ("C 7", (2, 1)), (301, 399, 101, 199): ("D 7", (3, 1)),
                      (401, 499, 101, 199): ("E 7", (4, 1)), (501, 599, 101, 199): ("F 7", (5, 1)),
                      (601, 699, 101, 199): ("G 7", (6, 1)), (701, 799, 101, 199): ("H 7", (7, 1)),
 
@@ -711,5 +798,17 @@ def check_bounds(mouse_pos, screen):
 
         #print(item)
 
+
+def end_game():
+
+    black = (0, 0, 0)
+
+    font = pygame.font.Font('freesansbold.ttf', 50)
+
+    end_game_text = font.render("GAME OVER", True, black)
+
+    pygame.display.get_surface().blit(end_game_text, ((800 / 2), (800 / 2)))
+
+    chess.end_game()
 
 init_board()
