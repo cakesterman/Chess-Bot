@@ -1,5 +1,7 @@
 import pygame, sys
 import chess_rules
+import computer
+import time
 
 class Chess(object):
 
@@ -7,7 +9,7 @@ class Chess(object):
 
         # self.image = ''
 
-        def __init__(self, image, name, id, player):
+        def __init__(self, image, name, id, player, value):
 
             self.image = image
             self.name = name
@@ -41,39 +43,39 @@ class Chess(object):
 
     run = True
 
-    black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1, 2)
-    black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2, 2)
-    black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1, 2)
-    black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 2, 2)
-    black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 1, 2)
-    black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 2, 2)
-    black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 1, 2)
-    black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 1, 2)
-    black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 1, 2)
-    black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 2, 2)
-    black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 3, 2)
-    black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 4, 2)
-    black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 5, 2)
-    black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 6, 2)
-    black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 7, 2)
-    black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 8, 2)
+    black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1, 2, 5)
+    black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2, 2, 5)
+    black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 1, 2, 3)
+    black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 2, 2, 3)
+    black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 1, 2, 3)
+    black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 2, 2, 3)
+    black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 1, 2, -1)
+    black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 1, 2, 9)
+    black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 1, 2, 1)
+    black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 2, 2, 1)
+    black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 3, 2, 1)
+    black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 4, 2, 1)
+    black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 5, 2, 1)
+    black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 6, 2, 1)
+    black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 7, 2, 1)
+    black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 8, 2, 1)
 
-    white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1, 1)
-    white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2, 1)
-    white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 1, 1)
-    white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 2, 1)
-    white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 1, 1)
-    white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 2, 1)
-    white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 1, 1)
-    white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 1, 1)
-    white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 1, 1)
-    white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 2, 1)
-    white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 3, 1)
-    white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 4, 1)
-    white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 5, 1)
-    white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 6, 1)
-    white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 7, 1)
-    white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 8, 1)
+    white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1, 1, 5)
+    white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2, 1, 5)
+    white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 1, 1, 3)
+    white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 2, 1, 3)
+    white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 1, 1, 3)
+    white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 2, 1, 3)
+    white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 1, 1, -1)
+    white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 1, 1, 9)
+    white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 1, 1, 1)
+    white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 2, 1, 1)
+    white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 3, 1, 1)
+    white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 4, 1, 1)
+    white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 5, 1, 1)
+    white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 6, 1, 1)
+    white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 7, 1, 1)
+    white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 8, 1, 1)
 
     highlighted_box = (-1, -1)
 
@@ -182,7 +184,7 @@ class Chess(object):
         screen.blit(self.black_rook, (pos[0] + 25, pos[1] + 25))
 
 
-def init_board():
+def init_game(player1, player2):
 
     global chess
 
@@ -197,6 +199,8 @@ def init_board():
     screen = pygame.display.set_mode(size)
 
     def init_game_pieces():
+
+        print("Running init_game_pieces")
 
         black_pieces_list = chess.get_black_game_pieces()
 
@@ -248,11 +252,22 @@ def init_board():
         if chess.get_turn() == 1:
 
             update_turn(screen, "White's Turn")
+            random_game_piece, random_move = computer.make_move(player1)
+            highlight_box(random_game_piece)
+            update_board(screen)
+            highlight_box(random_move)
+            update_board(screen)
 
         elif chess.get_turn() == 2:
 
             update_turn(screen, "Black's Turn")
+            random_game_piece, random_move = computer.make_move(player2)
+            highlight_box(random_game_piece)
+            update_board(screen)
+            highlight_box(random_move)
+            update_board(screen)
 
+        # This is if there is human interaction (Left or right mouse click)
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT: sys.exit()
@@ -291,6 +306,8 @@ def init_board():
                     counter += 1
 
         pygame.display.flip()
+
+    print("GAME ENDED")
 
 
 def draw_boxes():
@@ -572,6 +589,86 @@ def check_for_check():
 
     black_king_pos, white_king_pos = get_kings_pos()
 
+    # This checks for checkmate
+    def check_for_checkmate():
+
+        if chess.get_turn() == 2:
+
+            _, white_king_moves, white_king_captures = chess_rules.check_valid_move(
+                "White King", white_king_pos, "", chess.get_chess_board())
+
+            if len(white_king_moves) == 0 and len(white_king_captures) == 0:
+
+                print("WHITE CHECKMATE")
+
+                return True
+
+            else:
+
+                for i in white_king_moves:
+
+                    if i in all_possible_moves_black or i in all_possible_captures_black:
+
+                        print(f"WHITE CHECKMATE")
+
+                        # if i in all_possible_moves_black:
+                        #
+                        #     for _ in range(len(all_possible_moves_black)):
+                        #
+                        #         print(f"WHITE CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
+                        #
+                        # if i in all_possible_captures_black:
+                        #
+                        #     for _ in range(len(all_possible_captures_black)):
+                        #
+                        #         print(f"WHITE CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
+
+                    else:
+                        return None
+
+                    # End game
+                    return True
+
+        else:
+
+            _, black_king_moves, black_king_captures = chess_rules.check_valid_move(
+                "Black King", black_king_pos, "", chess.get_chess_board())
+
+            # print(f"Black king moves: {black_king_moves}")
+            # print(captures)
+            # print(moves)
+
+            if len(black_king_moves) == 0 and len(captures) == 0:
+
+                print("BLACK CHECKMATE")
+
+                return True
+
+            else:
+
+                for i in black_king_moves:
+
+                    if i in all_possible_moves_white or i in all_possible_captures_black:
+
+                        print("BLACK CHECKMATE")
+
+                        # if i in all_possible_moves_white:
+                        #
+                        #     for _ in range(len(all_possible_moves_white)):
+                        #         print(f"BLACK CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
+                        #
+                        # if i in all_possible_captures_white:
+                        #
+                        #     for _ in range(len(all_possible_captures_white)):
+                        #         print(f"BLACK CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
+
+                    else:
+
+                        return None
+
+                    # End game
+                    return True
+
     for game_piece in chess.get_chess_board():
 
         if chess.get_chess_board().get(game_piece) is not None:
@@ -601,62 +698,12 @@ def check_for_check():
                 # Check for checkmate at this point
                 print("CHECK")
 
-    # This checks for checkmate
-    def check_for_checkmate():
+                if check_for_checkmate():
+                    end_game()
 
 
-        if chess.get_turn() == 2:
 
-            _, white_king_moves, white_king_captures = chess_rules.check_valid_move(
-                "White King", white_king_pos, "", chess.get_chess_board())
 
-            if len(white_king_moves) == 0 and len(white_king_captures) == 0:
-
-                print("WHITE CHECKMATE")
-
-            else:
-
-                for i in white_king_moves:
-
-                    if i in all_possible_moves_black or i in all_possible_captures_black:
-                        print("WHITE CHECKMATE")
-                    else:
-                        return None
-
-                    # End game
-                    return True
-
-        else:
-
-            _, black_king_moves, black_king_captures = chess_rules.check_valid_move(
-                "Black King", black_king_pos, "", chess.get_chess_board())
-
-            # print(f"Black king moves: {black_king_moves}")
-            # print(captures)
-            # print(moves)
-
-            if len(black_king_moves) == 0 and len(captures) == 0:
-
-                print("BLACK CHECKMATE")
-
-            else:
-
-                for i in black_king_moves:
-
-                    if i in all_possible_moves_white or i in all_possible_captures_black:
-
-                        print("BLACK CHECKMATE")
-
-                    else:
-
-                        return None
-
-                    # End game
-                    return True
-
-    if check_for_checkmate():
-
-        end_game()
 
     #print(f"Black King is at: {black_king_pos}")
     #print(f"White King is at: {white_king_pos}")
@@ -809,6 +856,7 @@ def end_game():
 
     pygame.display.get_surface().blit(end_game_text, ((800 / 2), (800 / 2)))
 
+
     chess.end_game()
 
-init_board()
+# init_board()
