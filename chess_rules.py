@@ -290,8 +290,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             if chess_board.get((x, y)) is None:
 
-                if x <= 0 or y >= 7:
+                if x < 0 or y > 7:
                     possible = False
+                    break
 
                 #print("At location ({}, {})".format(x, y))
 
@@ -299,8 +300,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             elif chess_board.get((x, y)).get_player_side() != player:
 
-                if x <= 0 or y >= 7:
+                if x < 0 or y > 7:
                     possible = False
+                    break
 
                 all_possible_captures.append((x, y))
                 possible = False
@@ -327,8 +329,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             if chess_board.get((x, y)) is None:
 
-                if x >= 7 or y >= 7:
+                if x > 7 or y > 7:
                     possible = False
+                    break
 
                 #print("At location ({}, {})".format(x, y))
 
@@ -336,8 +339,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             elif chess_board.get((x, y)).get_player_side() != player:
 
-                if x >= 7 or y >= 7:
+                if x > 7 or y > 7:
                     possible = False
+                    break
 
                 all_possible_captures.append((x, y))
                 possible = False
@@ -359,8 +363,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             if chess_board.get((x, y)) is None:
 
-                if x <= 0 or y <= 0:
+                if x < 0 or y < 0:
                     possible = False
+                    break
 
                 #print("At location ({}, {})".format(x, y))
 
@@ -368,8 +373,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             elif chess_board.get((x, y)).get_player_side() != player:
 
-                if x <= 0 or y <= 0:
+                if x < 0 or y < 0:
                     possible = False
+                    break
 
                 all_possible_captures.append((x, y))
                 possible = False
@@ -391,8 +397,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             if chess_board.get((x, y)) is None:
 
-                if x >= 7 or y >= 0:
+                if x > 7 or y < 0:
                     possible = False
+                    break
 
                 #print("At location ({}, {})".format(x, y))
 
@@ -400,8 +407,9 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
             elif chess_board.get((x, y)).get_player_side() != player:
 
-                if x >= 7 or y >= 0:
+                if x > 7 or y < 0:
                     possible = False
+                    break
 
                 all_possible_captures.append((x, y))
                 possible = False
@@ -414,10 +422,13 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
         if current_pos[0] > 0:
 
+            print("Here1")
+
             # Search left down diagonally
             search_left_down_diagonally()
 
         if current_pos[0] < 7:
+            print("Here2")
 
             # Search right down diagonally
             search_right_down_diagonally()
@@ -426,12 +437,14 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
         if current_pos[1] == 7 and 0 < current_pos[0] < 7:
 
+            print("Here3")
             search_left_up_diagonally()
             search_right_up_diagonally()
 
         else:
 
             if current_pos[0] > 0:
+                print("Here4")
 
                 search_left_down_diagonally()
                 search_right_down_diagonally()
@@ -439,12 +452,12 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                 search_right_up_diagonally()
 
         if current_pos[0] == 0 and current_pos[1] < 7:
-
+            print("Here5")
             search_right_up_diagonally()
             search_right_down_diagonally()
 
         if current_pos[0] == 7 and current_pos[1] < 7:
-
+            print("Here6")
             search_left_up_diagonally()
             search_left_down_diagonally()
 

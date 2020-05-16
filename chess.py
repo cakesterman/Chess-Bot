@@ -252,20 +252,20 @@ def init_game(player1, player2):
         if chess.get_turn() == 1:
 
             update_turn(screen, "White's Turn")
-            random_game_piece, random_move = computer.make_move(player1)
-            highlight_box(random_game_piece)
-            update_board(screen)
-            highlight_box(random_move)
-            update_board(screen)
+            # random_game_piece, random_move = computer.make_move(player1)
+            # highlight_box(random_game_piece)
+            # update_board(screen)
+            # highlight_box(random_move)
+            # update_board(screen)
 
         elif chess.get_turn() == 2:
 
             update_turn(screen, "Black's Turn")
-            random_game_piece, random_move = computer.make_move(player2)
-            highlight_box(random_game_piece)
-            update_board(screen)
-            highlight_box(random_move)
-            update_board(screen)
+            # random_game_piece, random_move = computer.make_move(player2)
+            # highlight_box(random_game_piece)
+            # update_board(screen)
+            # highlight_box(random_move)
+            # update_board(screen)
 
         # This is if there is human interaction (Left or right mouse click)
         for event in pygame.event.get():
