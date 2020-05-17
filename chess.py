@@ -252,20 +252,49 @@ def init_game(player1, player2):
         if chess.get_turn() == 1:
 
             update_turn(screen, "White's Turn")
-            # random_game_piece, random_move = computer.make_move(player1)
-            # highlight_box(random_game_piece)
-            # update_board(screen)
-            # highlight_box(random_move)
-            # update_board(screen)
+
+            # # returns True if king in check
+            # if check_for_check():
+            #
+            #     king_pos, random_move = computer.move_king(player1)
+            #     highlight_box(king_pos)
+            #     update_board(screen)
+            #     highlight_box(random_move)
+            #     update_board(screen)
+            #     #pygame.time.wait(500)
+            #
+            # else:
+            #
+            #     random_game_piece, random_move = computer.make_move(player1)
+            #     highlight_box(random_game_piece)
+            #     update_board(screen)
+            #     highlight_box(random_move)
+            #     update_board(screen)
+                #pygame.time.wait(500)
+            #pygame.time.wait(1000)
 
         elif chess.get_turn() == 2:
 
             update_turn(screen, "Black's Turn")
-            # random_game_piece, random_move = computer.make_move(player2)
-            # highlight_box(random_game_piece)
-            # update_board(screen)
-            # highlight_box(random_move)
-            # update_board(screen)
+
+            # returns True if king in check
+            if check_for_check():
+
+                king_pos, random_move = computer.move_king(player2)
+                highlight_box(king_pos)
+                update_board(screen)
+                highlight_box(random_move)
+                update_board(screen)
+
+            else:
+
+                random_game_piece, random_move = computer.make_move(player2)
+                highlight_box(random_game_piece)
+                update_board(screen)
+                highlight_box(random_move)
+                update_board(screen)
+
+            #pygame.time.wait(1000)
 
         # This is if there is human interaction (Left or right mouse click)
         for event in pygame.event.get():
@@ -305,7 +334,52 @@ def init_game(player1, player2):
 
                     counter += 1
 
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_SPACE:
+
+                    pygame.time.wait(5000)
+
         pygame.display.flip()
+
+    x = True
+
+    while x:
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+
+                if event.key == pygame.K_ESCAPE:
+
+                    x = False
+
+            if (0, 0, 1) == pygame.mouse.get_pressed():
+
+                print("RMB")
+
+                mouse_pos = pygame.mouse.get_pos()
+
+                board_pos = check_bounds(mouse_pos, screen)
+
+                if chess.get_chess_board().get(board_pos) is not None:
+
+                    _, moves, captures = chess_rules.check_valid_move(
+                        chess.get_chess_board().get(board_pos).get_name(),
+                        board_pos, "",
+                        chess.get_chess_board())
+
+                    if counter % 2 == 0:
+                        highlight_all_possible_moves(moves, captures, True)
+                    else:
+                        highlight_all_possible_moves(moves, captures, False)
+
+                    counter += 1
+
+        pygame.display.flip()
+
+
+
 
     print("GAME ENDED")
 
@@ -372,10 +446,13 @@ def draw_game_pieces(screen):
 def update_turn(screen, player):
 
     WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
 
     font = pygame.font.Font('freesansbold.ttf', 32)
 
     text = font.render(player, True, WHITE)
+
+    pygame.display.get_surface().fill(BLACK, rect=(801, 0, 199, 800))
 
     screen.blit(text, (800, 400))
 
@@ -434,7 +511,7 @@ def highlight_box(box_cords):
 
                 draw_boxes()
 
-                check_for_check()
+                #check_for_check()
 
                 # Set to true to deselect box after making move
                 box_deselect = True
@@ -570,7 +647,11 @@ def check_for_check():
     all_possible_moves_black = []
     all_possible_captures_black = []
 
+    # This breaks sometimes, not sure why
     def get_kings_pos():
+
+        black_king_pos = (-1, -1)
+        white_king_pos = (-1, -1)
 
         for game_piece in chess.get_chess_board():
 
@@ -585,6 +666,8 @@ def check_for_check():
 
                     white_king_pos = (game_piece[0], game_piece[1])
 
+        print(black_king_pos, white_king_pos)
+
         return black_king_pos, white_king_pos
 
     black_king_pos, white_king_pos = get_kings_pos()
@@ -592,14 +675,14 @@ def check_for_check():
     # This checks for checkmate
     def check_for_checkmate():
 
-        if chess.get_turn() == 2:
+        if chess.get_turn() == 1:
 
             _, white_king_moves, white_king_captures = chess_rules.check_valid_move(
                 "White King", white_king_pos, "", chess.get_chess_board())
 
             if len(white_king_moves) == 0 and len(white_king_captures) == 0:
 
-                print("WHITE CHECKMATE")
+                print("WHITE CHECKMATE, No Moves")
 
                 return True
 
@@ -607,9 +690,11 @@ def check_for_check():
 
                 for i in white_king_moves:
 
-                    if i in all_possible_moves_black or i in all_possible_captures_black:
+                    # if i in all_possible_moves_black or i in all_possible_captures_black:
+                    if i in all_possible_captures_black:
 
                         print(f"WHITE CHECKMATE")
+
 
                         # if i in all_possible_moves_black:
                         #
@@ -626,8 +711,10 @@ def check_for_check():
                     else:
                         return None
 
-                    # End game
-                    return True
+                print(f"White King moves: {white_king_moves}")
+
+                # End game
+                return True
 
         else:
 
@@ -640,7 +727,7 @@ def check_for_check():
 
             if len(black_king_moves) == 0 and len(captures) == 0:
 
-                print("BLACK CHECKMATE")
+                print("BLACK CHECKMATE, No Moves")
 
                 return True
 
@@ -648,7 +735,8 @@ def check_for_check():
 
                 for i in black_king_moves:
 
-                    if i in all_possible_moves_white or i in all_possible_captures_black:
+                    #if i in all_possible_moves_white or i in all_possible_captures_black:
+                    if i in all_possible_captures_black:
 
                         print("BLACK CHECKMATE")
 
@@ -666,8 +754,10 @@ def check_for_check():
 
                         return None
 
-                    # End game
-                    return True
+                print(f"Black King moves: {black_king_moves}")
+
+                # End game
+                return True
 
     for game_piece in chess.get_chess_board():
 
@@ -700,6 +790,8 @@ def check_for_check():
 
                 if check_for_checkmate():
                     end_game()
+
+                return True
 
 
 

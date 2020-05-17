@@ -422,13 +422,10 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
         if current_pos[0] > 0:
 
-            print("Here1")
-
             # Search left down diagonally
             search_left_down_diagonally()
 
         if current_pos[0] < 7:
-            print("Here2")
 
             # Search right down diagonally
             search_right_down_diagonally()
@@ -437,14 +434,12 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
 
         if current_pos[1] == 7 and 0 < current_pos[0] < 7:
 
-            print("Here3")
             search_left_up_diagonally()
             search_right_up_diagonally()
 
         else:
 
             if current_pos[0] > 0:
-                print("Here4")
 
                 search_left_down_diagonally()
                 search_right_down_diagonally()
@@ -452,14 +447,16 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
                 search_right_up_diagonally()
 
         if current_pos[0] == 0 and current_pos[1] < 7:
-            print("Here5")
             search_right_up_diagonally()
             search_right_down_diagonally()
 
         if current_pos[0] == 7 and current_pos[1] < 7:
-            print("Here6")
             search_left_up_diagonally()
             search_left_down_diagonally()
+
+    if current_pos[1] == 7 and current_pos[0] == 0:
+
+        search_right_up_diagonally()
 
     return all_possible_moves, all_possible_captures
 
@@ -636,6 +633,12 @@ def queen_calculate_all_possible_moves(current_pos, chess_board):
         search_up()
         search_down()
 
+    if 0 < current_pos[1] < 7 and current_pos[0] == 0:
+
+        search_up()
+        search_right()
+        search_down()
+
     #print(all_possible_moves)
     return all_possible_moves, all_possible_captures
 
@@ -740,18 +743,21 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
         search_left_down_diagonally()
         search_right_down_diagonally()
 
+    # y == 0 and x == 0
     if current_pos[1] == 0 and current_pos[0] == 0:
 
         search_right()
         search_down()
         search_right_down_diagonally()
 
+    # y == 0 and x == 7
     if current_pos[1] == 0 and current_pos[0] == 7:
 
         search_left()
         search_down()
         search_left_down_diagonally()
 
+    # y == 7 and 0 < x < 7
     if current_pos[1] == 7 and 0 < current_pos[0] < 7:
 
         search_up()
@@ -760,17 +766,35 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
         search_left_up_diagonally()
         search_right_up_diagonally()
 
+    # y == 7 and x == 0
     if current_pos[1] == 7 and current_pos[0] == 0:
 
         search_right()
         search_up()
         search_right_up_diagonally()
 
+    # y == 7 and x == 7
     if current_pos[1] == 7 and current_pos[0] == 7:
 
         search_left()
         search_up()
         search_left_up_diagonally()
+
+    if 0 < current_pos[1] < 7 and current_pos[0] == 0:
+
+        search_up()
+        search_right()
+        search_down()
+        search_right_down_diagonally()
+        search_right_up_diagonally()
+
+    if 0 < current_pos[1] < 7 and current_pos[0] == 7:
+
+        search_up()
+        search_left()
+        search_down()
+        search_left_up_diagonally()
+        search_left_down_diagonally()
 
     if 0 < current_pos[1] < 7 and 0 < current_pos[0] < 7:
 
@@ -808,28 +832,32 @@ def pawn_calculate_all_possible_moves(current_pos, chess_board):
 
     if chess_board[current_pos].get_name()[0:5] == "Black":
 
-        if chess_board.get((x, y + 1)) is None:
+        if y < 7:
 
-            all_possible_moves.append((x, y + 1))
+            if chess_board.get((x, y + 1)) is None:
 
-        if chess_board.get((x - 1, y + 1)) is not None and chess_board.get((x - 1, y + 1)).get_player_side() != player:
+                all_possible_moves.append((x, y + 1))
 
-            all_possible_captures.append((x - 1, y + 1))
+            if chess_board.get((x - 1, y + 1)) is not None and chess_board.get((x - 1, y + 1)).get_player_side() != player:
 
-        if chess_board.get((x + 1, y + 1)) is not None and chess_board.get((x + 1, y + 1)).get_player_side() != player:
+                all_possible_captures.append((x - 1, y + 1))
 
-            all_possible_captures.append((x + 1, y + 1))
+            if chess_board.get((x + 1, y + 1)) is not None and chess_board.get((x + 1, y + 1)).get_player_side() != player:
+
+                all_possible_captures.append((x + 1, y + 1))
 
     # else pawn is a white piece
     else:
 
-        if chess_board.get((x, y - 1)) is None:
-            all_possible_moves.append((x, y - 1))
+        if y > 0:
 
-        if chess_board.get((x - 1, y - 1)) is not None and chess_board.get((x - 1, y - 1)).get_player_side() != player:
-            all_possible_captures.append((x - 1, y - 1))
+            if chess_board.get((x, y - 1)) is None:
+                all_possible_moves.append((x, y - 1))
 
-        if chess_board.get((x + 1, y - 1)) is not None and chess_board.get((x + 1, y - 1)).get_player_side() != player:
-            all_possible_captures.append((x + 1, y - 1))
+            if chess_board.get((x - 1, y - 1)) is not None and chess_board.get((x - 1, y - 1)).get_player_side() != player:
+                all_possible_captures.append((x - 1, y - 1))
+
+            if chess_board.get((x + 1, y - 1)) is not None and chess_board.get((x + 1, y - 1)).get_player_side() != player:
+                all_possible_captures.append((x + 1, y - 1))
 
     return all_possible_moves, all_possible_captures
