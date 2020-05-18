@@ -8,11 +8,32 @@ class computer(object):
     def __init__(self, name):
 
         self.name = name
+        self.game_pieces = {}
+
 
 
     def get_name(self):
 
         return self.name
+
+    def set_game_pieces(self, game_pieces_list):
+
+        for x in game_pieces_list:
+
+            self.game_pieces[x] = x.get_pos()
+
+
+    def get_game_pieces(self):
+
+        return self.game_pieces
+
+    def update_game_piece(self, game_obj, new_pos):
+
+        self.game_pieces[game_obj] = new_pos
+
+    def remove_game_piece(self, game_obj):
+
+        self.game_pieces.pop(game_obj)
 
 def make_move(computer):
 
@@ -255,3 +276,8 @@ def move_king(computer):
         random_move = best_possible_moves[random.randrange(len(best_possible_moves))]
 
         return king_pos, random_move
+
+
+def move_pawn(computer):
+
+    pass
