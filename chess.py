@@ -338,6 +338,8 @@ def init_game(player1, player2):
 
             if (1, 0, 0) == pygame.mouse.get_pressed():
 
+                print(computer.move_pawn(player1))
+
                 #print(pygame.mouse.get_pressed())
 
                 mouse_pos = pygame.mouse.get_pos()

@@ -21,6 +21,7 @@ class computer(object):
         for x in game_pieces_list:
 
             self.game_pieces[x] = [x.get_pos(), x.get_id()]
+            #self.game_pieces[x] = x.get_pos()
 
     def get_game_pieces(self):
 
@@ -32,7 +33,7 @@ class computer(object):
 
     def update_game_piece(self, game_obj, new_pos):
 
-        self.game_pieces[game_obj] = new_pos
+        self.game_pieces[game_obj][0] = new_pos
 
     def remove_game_piece(self, game_obj):
 
@@ -285,88 +286,160 @@ def move_pawn(computer):
 
     # Check all pawns and see all possible pawn positions
     # Needs to return the pawn to move(pawn position) and the location that it is moving to
+    # This returns pawn and whatever game object it will capture
+    # Should I make it so it only returns if it can capture or should it be able to return a position to move to
 
-    pawn_list = []
+    # I rewrote this because I hated the original code for it
+    pawn_dict = {}
+    # {pawn: [current_pos, [moves], [captures]]}
 
-    all_possible_pawn_positions = {}
-    # {pawn object : [{moves: pawn object}]}
-    all_possible_pawn_captures = {}
-    # {pawn object : [{captures: pawn object}]}
-
-    # This puts all of the pawns in a list for later use
+    # This will initialize pawn_dict
+    # So this technically works with all game objects, not just pawns
     for key, value in computer.get_game_pieces().items():
 
-        # Checks if the id is a pawn value
-        if 9 <= value[1] <= 16:
+        #print(f"{key.get_name()} at pos {value[0]}")
 
-            pawn_list.append(key)
+        #if 9 <= value[1] <= 16:
 
-    for pawn in pawn_list:
+        #moves, captures = chess_rules.pawn_calculate_all_possible_moves(value[0], chess.chess.get_chess_board())
+        _, moves, captures = chess_rules.check_valid_move(key.get_name(), value[0], None, chess.chess.get_chess_board())
 
-        _, moves, captures = chess_rules.check_valid_move(
-            pawn.get_name(), computer.get_game_pieces().get(pawn)[0], "",
-            chess.chess.get_chess_board())
+        pawn_dict[key] = [value[0], moves, captures]
 
-        # This stupid shit always makes a generator object and I dont know how to work with that
-        #all_possible_pawn_positions[pawn] = [{(x for x in moves): pawn}]
+    highest_value_dict = {}
+    # {value: [(pawn, enemy_piece)]}
+    highest_value = 0
 
-        for move in moves:
 
-            all_possible_pawn_positions[pawn] = [{move: pawn}]
+    for key, value in pawn_dict.items():
 
-        for capture in captures:
+        for capture in value[2]:
 
-            all_possible_pawn_positions[pawn] = [capture]
+            enemy_piece = chess.chess.get_chess_board().get(capture)
 
-        print(f"{pawn.get_name()} at pos {computer.get_game_pieces().get(pawn)[0]} moves are: {moves}")
+            print(f"{key.get_name()} can capture {enemy_piece.get_name()}")
 
-    print(all_possible_pawn_positions)
-    print(all_possible_pawn_captures)
+            value = enemy_piece.get_value()
 
-    if len(all_possible_pawn_captures) != 0:
+            if value > highest_value:
 
-        highest_value = 0
-        highest_enemy_piece_value = {}
-        # highest_enemy_piece_value = {pos: [value, pawn object]}
+                highest_value = value
 
-        for key, value in all_possible_pawn_captures.items():
+            if value not in highest_value_dict:
 
-            # Get value of enemy game piece, decide if it is worth capturing their piece
-
-            if len(value) > 1:
-
-                for x in value:
-
-                    enemy_piece_value = chess.chess.get_chess_board().get(x).get_value()
-                    if enemy_piece_value > highest_value:
-                        highest_value = enemy_piece_value
-                        highest_enemy_piece_value.clear()
-                        highest_enemy_piece_value[x] = [enemy_piece_value, key]
-
-                    if enemy_piece_value == highest_value:
-                        highest_enemy_piece_value[x] = [enemy_piece_value, key]
+                highest_value_dict[value] = [(key, enemy_piece)]
 
             else:
 
-                enemy_piece_value = chess.chess.get_chess_board().get(value[0]).get_value()
-                if enemy_piece_value > highest_value:
+                highest_value_dict[value].append((key, enemy_piece))
 
-                    highest_value = enemy_piece_value
-                    highest_enemy_piece_value.clear()
-                    highest_enemy_piece_value[value[0]] = [enemy_piece_value, key]
+    # Return the pawn and enemy piece of there is only a len of 1
+    if len(highest_value_dict) > 0:
 
-                if enemy_piece_value == highest_value:
+        if len(highest_value_dict[highest_value]) == 1:
 
-                    highest_enemy_piece_value[value[0]] = [enemy_piece_value, key]
+            return highest_value_dict[highest_value]
 
-        # Since pawns have the lowest value, usually it is worth it to capture enemy piece.  If enemy piece is a pawn
-        # making sure that you are not trading pieces could be important
+        # Return a 'random' set, this solution is anything but elegant
+        random_index = random.randrange(len(highest_value_dict))
 
-        if len(highest_enemy_piece_value) > 1:
+        index = 0
+        for value in highest_value_dict[highest_value]:
 
-            print("Multiple options for capturing, add stuff here later")
+            if index == random_index:
 
-        else:
+                return value
 
-            return computer.get_game_pieces().get(x for x in highest_enemy_piece_value.keys())
+            index += 1
+
+
+
+
+
+    #print(pawn_dict)
+    #print(highest_value_dict)
+
+    # pawn_list = []
+    #
+    # all_possible_pawn_positions = {}
+    # # {pawn object : [{moves: pawn object}]}
+    # all_possible_pawn_captures = {}
+    # # {pawn object : [{captures: pawn object}]}
+    #
+    # # This puts all of the pawns in a list for later use
+    # for key, value in computer.get_game_pieces().items():
+    #
+    #     # Checks if the id is a pawn value
+    #     if 9 <= value[1] <= 16:
+    #
+    #         pawn_list.append(key)
+    #
+    # for pawn in pawn_list:
+    #
+    #     _, moves, captures = chess_rules.check_valid_move(
+    #         pawn.get_name(), computer.get_game_pieces().get(pawn)[0], "",
+    #         chess.chess.get_chess_board())
+    #
+    #     # This stupid shit always makes a generator object and I dont know how to work with that
+    #     #all_possible_pawn_positions[pawn] = [{(x for x in moves): pawn}]
+    #
+    #     for move in moves:
+    #
+    #         all_possible_pawn_positions[pawn] = [{move: pawn}]
+    #
+    #     for capture in captures:
+    #
+    #         all_possible_pawn_positions[pawn] = [capture]
+    #
+    #     print(f"{pawn.get_name()} at pos {computer.get_game_pieces().get(pawn)[0]} moves are: {moves}")
+    #
+    # print(all_possible_pawn_positions)
+    # print(all_possible_pawn_captures)
+    #
+    # if len(all_possible_pawn_captures) != 0:
+    #
+    #     highest_value = 0
+    #     highest_enemy_piece_value = {}
+    #     # highest_enemy_piece_value = {pos: [value, pawn object]}
+    #
+    #     for key, value in all_possible_pawn_captures.items():
+    #
+    #         # Get value of enemy game piece, decide if it is worth capturing their piece
+    #
+    #         if len(value) > 1:
+    #
+    #             for x in value:
+    #
+    #                 enemy_piece_value = chess.chess.get_chess_board().get(x).get_value()
+    #                 if enemy_piece_value > highest_value:
+    #                     highest_value = enemy_piece_value
+    #                     highest_enemy_piece_value.clear()
+    #                     highest_enemy_piece_value[x] = [enemy_piece_value, key]
+    #
+    #                 if enemy_piece_value == highest_value:
+    #                     highest_enemy_piece_value[x] = [enemy_piece_value, key]
+    #
+    #         else:
+    #
+    #             enemy_piece_value = chess.chess.get_chess_board().get(value[0]).get_value()
+    #             if enemy_piece_value > highest_value:
+    #
+    #                 highest_value = enemy_piece_value
+    #                 highest_enemy_piece_value.clear()
+    #                 highest_enemy_piece_value[value[0]] = [enemy_piece_value, key]
+    #
+    #             if enemy_piece_value == highest_value:
+    #
+    #                 highest_enemy_piece_value[value[0]] = [enemy_piece_value, key]
+    #
+    #     # Since pawns have the lowest value, usually it is worth it to capture enemy piece.  If enemy piece is a pawn
+    #     # making sure that you are not trading pieces could be important
+    #
+    #     if len(highest_enemy_piece_value) > 1:
+    #
+    #         print("Multiple options for capturing, add stuff here later")
+    #
+    #     else:
+    #
+    #         return computer.get_game_pieces().get(x for x in highest_enemy_piece_value.keys())
 
