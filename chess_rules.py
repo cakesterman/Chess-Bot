@@ -316,8 +316,6 @@ def bishop_calculate_all_possible_moves(current_pos, chess_board):
         x = current_pos[0]
         y = current_pos[1]
 
-        print(y)
-
         possible = True
         while possible:
 
@@ -810,6 +808,8 @@ def king_calculate_all_possible_moves(current_pos, chess_board):
     return all_possible_moves, all_possible_captures
 
 def pawn_calculate_all_possible_moves(current_pos, chess_board):
+
+    #print(current_pos)
 
     player = chess_board.get(current_pos).get_player_side()
 

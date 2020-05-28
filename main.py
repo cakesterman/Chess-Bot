@@ -5,15 +5,19 @@ import pygame
 
 
 
-# times_to_run = 100
-# for game_count in range(times_to_run):
-#
-#     print(f"GAME COUNT {game_count}")
+times_to_run = 100
+for game_count in range(times_to_run):
 
-player1 = cp.computer("White")
-player2 = cp.computer("Black")
+    print(f"GAME COUNT {game_count}")
 
-chess.init_game(player1, player2)
+    player1 = cp.computer("White")
+    player2 = cp.computer("Black")
+
+    chess.init_game(player1, player2)
+
+
+
+
 
     # del chess
 
