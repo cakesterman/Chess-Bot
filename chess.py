@@ -78,24 +78,6 @@ class Chess(object):
 
     run = True
 
-    # black_rook1 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 1, 2, 5, (0, 0))
-    # black_rook2 = Chess_Pieces(pygame.image.load('blackRook.png'), "Black Rook", 2, 2, 5, (7, 0))
-    # black_knight1 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 3, 2, 3, (1, 0))
-    # black_knight2 = Chess_Pieces(pygame.image.load('blackKnight.png'), "Black Knight", 4, 2, 3, (6, 0))
-    # black_bishop1 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 5, 2, 3, (2, 0))
-    # black_bishop2 = Chess_Pieces(pygame.image.load('blackBishop.png'), "Black Bishop", 6, 2, 3, (5, 0))
-    # black_king1 = Chess_Pieces(pygame.image.load('blackKing.png'), "Black King", 7, 2, -1, (4, 0))
-    # black_queen1 = Chess_Pieces(pygame.image.load('blackQueen.png'), "Black Queen", 8, 2, 9, (3, 0))
-    # black_pawn1 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 9, 2, 1, (0, 1))
-    # black_pawn2 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 10, 2, 1, (1, 1))
-    # black_pawn3 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 11, 2, 1, (2, 1))
-    # black_pawn4 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 12, 2, 1, (3, 1))
-    # black_pawn5 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 13, 2, 1, (4, 1))
-    # black_pawn6 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 14, 2, 1, (5, 1))
-    # black_pawn7 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 15, 2, 1, (6, 1))
-    # black_pawn8 = Chess_Pieces(pygame.image.load('blackPawn.png'), "Black Pawn", 16, 2, 1, (7, 1))
-
-
     def __init__(self):
 
         self.black_rook1 = self.Chess_Pieces("Black Rook", 1, 2, 5, (0, 0))
@@ -183,109 +165,6 @@ class Chess(object):
         self.white_pieces = [self.white_rook, self.white_knight, self.white_bishop, self.white_queen, self.white_king,
                              self.white_pawn]
 
-    # black_rook1 = Chess_Pieces("Black Rook", 1, 2, 5, (0, 0))
-    # black_rook2 = Chess_Pieces("Black Rook", 2, 2, 5, (7, 0))
-    # black_knight1 = Chess_Pieces("Black Knight", 3, 2, 3, (1, 0))
-    # black_knight2 = Chess_Pieces("Black Knight", 4, 2, 3, (6, 0))
-    # black_bishop1 = Chess_Pieces("Black Bishop", 5, 2, 3, (2, 0))
-    # black_bishop2 = Chess_Pieces("Black Bishop", 6, 2, 3, (5, 0))
-    # black_king1 = Chess_Pieces("Black King", 7, 2, -1, (4, 0))
-    # black_queen1 = Chess_Pieces("Black Queen", 8, 2, 9, (3, 0))
-    # black_pawn1 = Chess_Pieces("Black Pawn", 9, 2, 1, (0, 1))
-    # black_pawn2 = Chess_Pieces("Black Pawn", 10, 2, 1, (1, 1))
-    # black_pawn3 = Chess_Pieces("Black Pawn", 11, 2, 1, (2, 1))
-    # black_pawn4 = Chess_Pieces("Black Pawn", 12, 2, 1, (3, 1))
-    # black_pawn5 = Chess_Pieces("Black Pawn", 13, 2, 1, (4, 1))
-    # black_pawn6 = Chess_Pieces("Black Pawn", 14, 2, 1, (5, 1))
-    # black_pawn7 = Chess_Pieces("Black Pawn", 15, 2, 1, (6, 1))
-    # black_pawn8 = Chess_Pieces("Black Pawn", 16, 2, 1, (7, 1))
-
-
-
-    # black_pieces_obj_list = [self.black_rook1, black_rook2, black_knight1, black_knight2, black_bishop1, black_bishop2,
-    #                          black_king1, black_queen1, black_pawn1, black_pawn2, black_pawn3, black_pawn4, black_pawn5,
-    #                          black_pawn6, black_pawn7, black_pawn8]
-
-    # white_rook1 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 1, 1, 5, (0, 7))
-    # white_rook2 = Chess_Pieces(pygame.image.load('whiteRook.png'), "White Rook", 2, 1, 5, (7, 7))
-    # white_knight1 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 3, 1, 3, (1, 7))
-    # white_knight2 = Chess_Pieces(pygame.image.load('whiteKnight.png'), "White Knight", 4, 1, 3, (6, 7))
-    # white_bishop1 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 5, 1, 3, (2, 7))
-    # white_bishop2 = Chess_Pieces(pygame.image.load('whiteBishop.png'), "White Bishop", 6, 1, 3, (5, 7))
-    # white_king1 = Chess_Pieces(pygame.image.load('whiteKing.png'), "White King", 7, 1, -1, (4, 7))
-    # white_queen1 = Chess_Pieces(pygame.image.load('whiteQueen.png'), "White Queen", 8, 1, 9, (3, 7))
-    # white_pawn1 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 9, 1, 1, (0, 6))
-    # white_pawn2 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 10, 1, 1, (1, 6))
-    # white_pawn3 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 11, 1, 1, (2, 6))
-    # white_pawn4 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 12, 1, 1, (3, 6))
-    # white_pawn5 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 13, 1, 1, (4, 6))
-    # white_pawn6 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 14, 1, 1, (5, 6))
-    # white_pawn7 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 15, 1, 1, (6, 6))
-    # white_pawn8 = Chess_Pieces(pygame.image.load('whitePawn.png'), "White Pawn", 16, 1, 1, (7, 6))
-    # white_rook1 = Chess_Pieces("White Rook", 1, 1, 5, (0, 7))
-    # white_rook2 = Chess_Pieces("White Rook", 2, 1, 5, (7, 7))
-    # white_knight1 = Chess_Pieces("White Knight", 3, 1, 3, (1, 7))
-    # white_knight2 = Chess_Pieces("White Knight", 4, 1, 3, (6, 7))
-    # white_bishop1 = Chess_Pieces("White Bishop", 5, 1, 3, (2, 7))
-    # white_bishop2 = Chess_Pieces("White Bishop", 6, 1, 3, (5, 7))
-    # white_king1 = Chess_Pieces("White King", 7, 1, -1, (4, 7))
-    # white_queen1 = Chess_Pieces("White Queen", 8, 1, 9, (3, 7))
-    # white_pawn1 = Chess_Pieces("White Pawn", 9, 1, 1, (0, 6))
-    # white_pawn2 = Chess_Pieces("White Pawn", 10, 1, 1, (1, 6))
-    # white_pawn3 = Chess_Pieces("White Pawn", 11, 1, 1, (2, 6))
-    # white_pawn4 = Chess_Pieces("White Pawn", 12, 1, 1, (3, 6))
-    # white_pawn5 = Chess_Pieces("White Pawn", 13, 1, 1, (4, 6))
-    # white_pawn6 = Chess_Pieces("White Pawn", 14, 1, 1, (5, 6))
-    # white_pawn7 = Chess_Pieces("White Pawn", 15, 1, 1, (6, 6))
-    # white_pawn8 = Chess_Pieces("White Pawn", 16, 1, 1, (7, 6))
-    #
-    # white_pieces_obj_list = [white_rook1, white_rook2, white_knight1, white_knight2, white_bishop1, white_bishop2,
-    #                          white_king1, white_queen1, white_pawn1, white_pawn2, white_pawn3, white_pawn4, white_pawn5,
-    #                          white_pawn6, white_pawn7, white_pawn8]
-
-    # chess_board = {(0, 0): black_rook1, (1, 0): black_knight1, (2, 0): black_bishop1,
-    #                (3, 0): black_queen1,
-    #                                   (4, 0): black_king1, (5, 0): black_bishop2, (6, 0): black_knight2, (7, 0): black_rook2,
-    #                                   (0, 1): black_pawn1, (1, 1): black_pawn2, (2, 1): black_pawn3, (3, 1): black_pawn4,
-    #                                   (4, 1): black_pawn5,
-    #                                   (5, 1): black_pawn6, (6, 1): black_pawn7, (7, 1): black_pawn8,
-    #
-    #                                   (0, 6): white_pawn1, (1, 6): white_pawn2, (2, 6): white_pawn3, (3, 6): white_pawn4,
-    #                                   (4, 6): white_pawn5,
-    #                                   (5, 6): white_pawn6, (6, 6): white_pawn7, (7, 6): white_pawn8, (0, 7): white_rook1,
-    #                                   (1, 7): white_knight1,
-    #                                   (2, 7): white_bishop1, (3, 7): white_queen1, (4, 7): white_king1, (5, 7): white_bishop2,
-    #                                   (6, 7): white_knight2, (7, 7): white_rook2}
-
-    # highlighted_box = (-1, -1)
-
-    # global black_rook
-    # global black_knight
-    # global black_bishop
-    # global black_king
-    # global black_queen
-    # global black_pawn
-
-    # black_rook = [pygame.image.load('blackRook.png'), "Black Rook"]
-    # black_knight = [pygame.image.load('blackKnight.png'), "Black Knight"]
-    # black_bishop = [pygame.image.load('blackBishop.png'), "Black Bishop"]
-    # black_king = [pygame.image.load('blackKing.png'), "Black King"]
-    # black_queen = [pygame.image.load('blackQueen.png'), "Black Queen"]
-    # black_pawn = [pygame.image.load('blackPawn.png'), "Black Pawn"]
-    #
-    # white_rook = [pygame.image.load('whiteRook.png'), "White Rook"]
-    # white_knight = [pygame.image.load('whiteKnight.png'), "White Knight"]
-    # white_bishop = [pygame.image.load('whiteBishop.png'), "White Bishop"]
-    # white_queen = [pygame.image.load("whiteQueen.png"), "White Queen"]
-    # white_king = [pygame.image.load("whiteKing.png"), "White King"]
-    # white_pawn = [pygame.image.load("whitePawn.png"), "White Pawn"]
-    #
-    # #black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
-    # black_pieces = [black_rook, black_knight, black_bishop, black_queen, black_king, black_pawn]
-    # white_pieces = [white_rook, white_knight, white_bishop, white_queen, white_king, white_pawn]
-
-
-
     # 1 = White, 2 = Black
     turn = 1
 
@@ -365,10 +244,6 @@ class Chess(object):
 
         return self.black_king1
 
-    # def draw_black_rook(self, pos):
-    #
-    #     screen.blit(self.black_rook, (pos[0] + 25, pos[1] + 25))
-
 
 def init_game(player1, player2):
 
@@ -381,13 +256,6 @@ def init_game(player1, player2):
     # Set up everything necessary for the computer class
     player1.set_game_pieces(chess.get_white_pieces_obj())
     player2.set_game_pieces(chess.get_black_pieces_obj())
-
-    # print(player1.get_game_pieces())
-    #print(computer.move_pawn(player1))
-
-
-    #print(chess.get_chess_board().get((0, 6)).get_name())
-    #print(chess.get_chess_board().get((0, 6)).get_moves())
 
     size = width, height = 1000, 800
 
@@ -513,12 +381,6 @@ def init_game(player1, player2):
             if event.type == pygame.QUIT: sys.exit()
 
             if (1, 0, 0) == pygame.mouse.get_pressed():
-
-                #print(computer.move_pawn(player1))
-
-                #computer.decide_piece(player1)
-
-                #print(pygame.mouse.get_pressed())
 
                 mouse_pos = pygame.mouse.get_pos()
 
@@ -840,8 +702,6 @@ def highlight_box(box_cords, player1, player2):
                 chess.update_game_piece(box_cords, temp)
 
                 # Do all CSV stuff here
-
-
                 with open('chess_data.csv', 'a', newline='') as csvfile:
 
                     writer = csv.writer(csvfile)
@@ -896,12 +756,6 @@ def highlight_box(box_cords, player1, player2):
     # Checks if user is selecting the highlighted box to unselect it
     if chess.get_highlighted_box() == box_cords:
 
-        # moves, captures = chess_rules.check_valid_move(
-        #     chess.get_chess_board().get(chess.get_highlighted_box()).get_name(), box_cords, "",
-        #     chess.get_chess_board())
-        #
-        # highlight_all_possible_moves(moves, captures, False)
-
         if (box_cords[1] % 2) == 0:
 
             if (box_cords[0] % 2) == 0:
@@ -926,13 +780,6 @@ def highlight_box(box_cords, player1, player2):
                 pygame.draw.rect(screen, chess.get_chessboard_color1(), pygame.Rect(x_pos, y_pos, 100, 100))
                 chess.set_highlighted_box((-1, -1))
 
-        # _, moves, captures = chess_rules.check_valid_move(chess.get_chess_board().get(box_cords).get_name(), box_cords, "",
-        #                                                chess.get_chess_board())
-        #
-        # highlight_all_possible_moves(moves, captures, False)
-
-
-
     # else the user selects a different box that is not already selected
     else:
 
@@ -943,39 +790,7 @@ def highlight_box(box_cords, player1, player2):
 
         chess_piece = ""
 
-        # Not sure if I want to use chess_rules.check_valid_move or call each piece individually
-
-        # if chess.get_chess_board().get(box_cords) is not None:
-        #
-        #     chess_piece = chess.get_chess_board().get(box_cords).get_name()
-        #
-        # if chess_piece == "White Pawn" or chess_piece == "Black Pawn":
-        #
-        #     moves, captures = chess_rules.pawn_calculate_all_possible_moves(box_cords, chess.get_chess_board())
-        #
-        #     highlight_all_possible_moves(moves, captures)
-        #
-        # if chess_piece == "Black Knight" or chess_piece == "White Knight":
-        #
-        #     moves, captures = chess_rules.knight_calculate_all_possible_moves(box_cords, chess.get_chess_board())
-        #
-        #     highlight_all_possible_moves(moves, captures)
-
-        # _, moves, captures = chess_rules.check_valid_move(chess.get_chess_board().get(box_cords).get_name(), box_cords, "",
-        #                                                chess.get_chess_board())
-        #
-        # highlight_all_possible_moves(moves, captures, True)
-
-
-
-    #print(x_pos, y_pos)
-
     return box_cords
-
-    #except:
-
-    #    print("No value")
-
 
 # Checks if the king is in check
 def check_for_check():
@@ -1036,19 +851,6 @@ def check_for_check():
 
                         print(f"WHITE CHECKMATE")
 
-
-                        # if i in all_possible_moves_black:
-                        #
-                        #     for _ in range(len(all_possible_moves_black)):
-                        #
-                        #         print(f"WHITE CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
-                        #
-                        # if i in all_possible_captures_black:
-                        #
-                        #     for _ in range(len(all_possible_captures_black)):
-                        #
-                        #         print(f"WHITE CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
-
                     else:
                         return None
 
@@ -1061,10 +863,6 @@ def check_for_check():
 
             _, black_king_moves, black_king_captures = chess_rules.check_valid_move(
                 "Black King", black_king_pos, "", chess.get_chess_board())
-
-            # print(f"Black king moves: {black_king_moves}")
-            # print(captures)
-            # print(moves)
 
             if len(black_king_moves) == 0 and len(captures) == 0:
 
@@ -1080,16 +878,6 @@ def check_for_check():
                     if i in all_possible_captures_black:
 
                         print("BLACK CHECKMATE")
-
-                        # if i in all_possible_moves_white:
-                        #
-                        #     for _ in range(len(all_possible_moves_white)):
-                        #         print(f"BLACK CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
-                        #
-                        # if i in all_possible_captures_white:
-                        #
-                        #     for _ in range(len(all_possible_captures_white)):
-                        #         print(f"BLACK CHECKMATE by {chess.get_chess_board().get(i).get_name()}")
 
                     else:
 
@@ -1133,13 +921,6 @@ def check_for_check():
                     end_game()
 
                 return True
-
-
-
-
-
-    #print(f"Black King is at: {black_king_pos}")
-    #print(f"White King is at: {white_king_pos}")
 
 
 def highlight_all_possible_moves(moves, captures, is_highlight):
